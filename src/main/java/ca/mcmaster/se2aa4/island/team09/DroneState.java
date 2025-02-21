@@ -1,20 +1,24 @@
 package ca.mcmaster.se2aa4.island.team09;
 
+import org.json.JSONObject;
+
 public class DroneState {
-    private DirectionManager directionManager;
+    private GPS gps;
+    private Propellers propellers;
     private Battery battery;
 
     public DroneState(String direction, Battery battery) {
-        this.directionManager = new DirectionManager(Direction.valueOf(direction));
+        this.gps = new GPS(Direction.valueOf(direction));
+        this.propellers = new Propellers(this.gps);
         this.battery = battery;
     }
 
     public Direction getDirection() {
-        return directionManager.getDirection();
+        return gps.getDirection();
     }
 
     public void turnDrone(String newDirection) {
-        directionManager.turnDrone(newDirection);
+        propellers.turnDrone(newDirection);
     }
 
     public int getBatteryLevel() {
@@ -27,6 +31,18 @@ public class DroneState {
 
     public boolean isDroneDead() {
         return battery.isBatteryEmpty();
+    }
+
+    public void moveForward() {
+        propellers.moveForward();
+    }
+    
+    public JSONObject getDecision() {
+        return propellers.getMovements();
+    }
+
+    public boolean isDroneMoving() {
+        return propellers.inUTurn();
     }
 
 }

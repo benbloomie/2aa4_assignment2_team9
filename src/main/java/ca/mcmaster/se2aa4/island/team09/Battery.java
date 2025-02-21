@@ -13,16 +13,16 @@ public class Battery {
 
     public void updateBattery(int amountUsed) {
         // ensures the amount used is not greater than what the drone has left
-        if (this.battery >= amountUsed) {
-            this.battery = this.battery - amountUsed;
+        if (battery >= amountUsed) {
+            battery = battery - amountUsed;
         }
         else {
-            this.battery = 0;  // if it does exceed its current charge, set it to zero to prevent a negative battery
+            battery = 0;  // if it does exceed its current charge, set it to zero to prevent a negative battery
         }
     }
 
     public int getBattery() {
-        return this.battery;
+        return battery;
     }
 
     public boolean isBatteryEmpty() {
