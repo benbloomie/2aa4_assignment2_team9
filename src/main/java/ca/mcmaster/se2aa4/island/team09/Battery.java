@@ -10,7 +10,7 @@ public class Battery {
         this.battery = battery;
     }
 
-    public void updateCharge(int amountUsed) {
+    public void updateBattery(int amountUsed) {
         // checking the amount used against the current battery charge prevents the battery from going negative
         if (this.battery >= amountUsed) {
             this.battery = this.battery - amountUsed;
