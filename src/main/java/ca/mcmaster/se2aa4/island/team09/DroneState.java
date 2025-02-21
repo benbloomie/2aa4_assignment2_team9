@@ -4,8 +4,8 @@ public class DroneState {
     private DirectionManager directionManager;
     private Battery battery;
 
-    public DroneState(Direction direction, Battery battery) {
-        this.directionManager = new DirectionManager(direction);
+    public DroneState(String direction, Battery battery) {
+        this.directionManager = new DirectionManager(Direction.valueOf(direction));
         this.battery = battery;
     }
 
@@ -14,7 +14,7 @@ public class DroneState {
     }
 
     public void turnDrone(String newDirection) {
-        directionManager.turnDrone(Direction.valueOf("W"));
+        directionManager.turnDrone(newDirection);
     }
 
     public int getBatteryLevel() {

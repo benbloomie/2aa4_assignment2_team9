@@ -1,4 +1,5 @@
 package ca.mcmaster.se2aa4.island.team09;
+import java.util.*;
 
 public enum Direction {
     N,
@@ -6,7 +7,8 @@ public enum Direction {
     S,
     W;
 
-    public Direction[] getDirections() {
-        return values().clone();
+    // returns an immutable list, so the directions cannot be changed
+    public List<Direction> getDirections() {
+        return List.of(values());
     }
 }

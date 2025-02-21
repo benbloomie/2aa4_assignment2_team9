@@ -1,9 +1,10 @@
 package ca.mcmaster.se2aa4.island.team09;
 
 public class Battery {
-    private Integer battery;
+    private int battery;
     
-    public Battery(Integer battery) {
+    public Battery(int battery) {
+        // ensures that the battery is valid before proceeding
         if (battery < 0) {
             throw new IllegalArgumentException("ERROR. Battery cannot be negative.");
         }
@@ -11,12 +12,12 @@ public class Battery {
     }
 
     public void updateBattery(int amountUsed) {
-        // checking the amount used against the current battery charge prevents the battery from going negative
+        // ensures the amount used is not greater than what the drone has left
         if (this.battery >= amountUsed) {
             this.battery = this.battery - amountUsed;
         }
         else {
-            this.battery = 0;
+            this.battery = 0;  // if it does exceed its current charge, set it to zero to prevent a negative battery
         }
     }
 

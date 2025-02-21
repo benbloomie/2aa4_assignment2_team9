@@ -1,8 +1,9 @@
 package ca.mcmaster.se2aa4.island.team09;
+import java.util.*;
 
 public class DirectionManager {
     private Direction direction;
-    private Direction[] directions;
+    private List<Direction> directions;
 
     public DirectionManager(Direction direction) {
         this.direction = direction;
@@ -14,11 +15,11 @@ public class DirectionManager {
     }
 
     public void turnRight() {
-        this.direction = this.directions[(this.direction.ordinal() + 1) % 4];
+        this.direction = this.directions.get((this.direction.ordinal() + 1) % 4);
     }
 
     public void turnLeft() {
-        this.direction = this.directions[(this.direction.ordinal() + 3) % 4];
+        this.direction = this.directions.get((this.direction.ordinal() + 3) % 4);
     }
 
     private boolean isTurnValid(Direction newDirection) {
@@ -29,12 +30,13 @@ public class DirectionManager {
         return true;
     }
 
-    public void turnDrone(Direction newDirection) {
+    public void turnDrone(String dir) {
+        Direction newDirection = Direction.valueOf(dir);
         // if the turn can be made directly, simply update the direction
         if (isTurnValid(newDirection)) {
             this.direction = newDirection;
         }
-        // otherwise, make two turns before proceeding
+        // otherwise, make two turns before proceeding; prevents the drone from flipping
         else {
             turnRight();
             turnRight();

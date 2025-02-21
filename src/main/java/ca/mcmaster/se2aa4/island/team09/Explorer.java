@@ -19,9 +19,9 @@ public class Explorer implements IExplorerRaid {
         logger.info("** Initialization info:\n {}",info.toString(2));
         String direction = info.getString("heading").toUpperCase();
         Integer batteryLevel = info.getInt("budget");
-        logger.info("The drone is facing {}", direction);
-        logger.info("Battery level is {}", batteryLevel);
-        DroneState drone = new DroneState(Direction.valueOf(direction), new Battery(batteryLevel));
+        DroneState drone = new DroneState(direction, new Battery(batteryLevel));
+        logger.info("The drone is facing {}", drone.getDirection());
+        logger.info("Battery level is {}", drone.getBatteryLevel());
     }
 
     @Override
