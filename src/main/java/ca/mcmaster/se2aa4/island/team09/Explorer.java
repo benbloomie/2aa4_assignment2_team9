@@ -69,12 +69,15 @@ public class Explorer implements IExplorerRaid {
         logger.info("** Response received:\n"+response.toString(2));
         Integer cost = response.getInt("cost");
         logger.info("The cost of the action was {}", cost);
-        drone.useBattery(cost);
-        logger.info("The battery of the drone is {}", drone.getBatteryLevel());
         String status = response.getString("status");
         logger.info("The status of the drone is {}", status);
         JSONObject extraInfo = response.getJSONObject("extras");
         logger.info("Additional information received: {}", extraInfo);
+
+        // stuff i have added
+        drone.useBattery(cost);
+        logger.info("The battery of the drone is {}", drone.getBatteryLevel());
+        // something to check radar status??
     }
 
     @Override
