@@ -21,6 +21,10 @@ public class DroneState {
         propellers.turnDrone(newDirection);
     }
 
+    public void turnRight() {
+        propellers.turnRight();
+    }
+
     public int getBatteryLevel() {
         return battery.getBattery();
     }

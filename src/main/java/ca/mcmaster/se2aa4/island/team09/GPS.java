@@ -22,6 +22,7 @@ public class GPS {
     public void updateDirection(int turnValue) {
         // calculates the ordinal of the new direction using modular arithmetic
         int newDirection = (direction.ordinal() + turnValue) % 4;  
-        direction = direction.getDirections().get(newDirection);  // updates new direction using its ordinal
+        direction = Direction.values()[newDirection];  // updates new direction using its ordinal
+
     }
 }

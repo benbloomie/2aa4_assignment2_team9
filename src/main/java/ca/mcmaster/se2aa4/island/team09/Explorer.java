@@ -12,6 +12,7 @@ public class Explorer implements IExplorerRaid {
 
     private final Logger logger = LogManager.getLogger();
     private DroneState drone;
+    // TEMPORARY TESTING VARIABLES
     private int moveForward = 0;
     private int turnCount = 0;
     private int uTurnCount = 0;
@@ -44,20 +45,20 @@ public class Explorer implements IExplorerRaid {
         }
         // testing turning
         else if (turnCount <= 4){
-            drone.turnDrone((drone.getDirection().getDirections().get((drone.getDirection().ordinal() + 1) % 4)).toString());
+            drone.turnRight();
             decision = drone.getDecision();
             turnCount++;
         }
         // testing u-turn
         else if(uTurnCount < 2) {
-            drone.turnDrone((drone.getDirection().getDirections().get((drone.getDirection().ordinal() + 2) % 4)).toString());
+            drone.turnRight();
             decision = drone.getDecision();
             uTurnCount++;
         }
-        // move forward until out of bounds
+        // stop after testing all movements
         else {
-            drone.moveForward(); 
-            decision = drone.getDecision();
+            decision = new JSONObject();
+            decision.put("action", "stop");
         }
         return decision.toString();
     }
