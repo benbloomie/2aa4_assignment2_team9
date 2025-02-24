@@ -13,20 +13,14 @@ public class Propellers {
     }
 
     public void turnRight() {
-        gps.updateDirection(1);  // updates the direction to turn right using a value of 1
-        JSONObject decision = new JSONObject();
-        decision.put("action", "heading");
-        decision.put("parameters", new JSONObject().put("direction", gps.getDirection()));
-        decisionQueue.add(decision);
+        Direction newDirection = gps.getRightDirection();
+        registerTurn(newDirection);
     }
 
     // not sure if i will need this, but leaving in for now
     public void turnLeft() {
-        gps.updateDirection(3);  // updates the direction to turn left using a value of 3
-        JSONObject decision = new JSONObject();
-        decision.put("action", "heading");
-        decision.put("parameters", new JSONObject().put("direction", gps.getDirection()));
-        decisionQueue.add(decision);
+        Direction newDirection = gps.getLeftDirection();
+        registerTurn(newDirection);
     }
 
     private boolean canDroneMakeTurn(Direction newDirection) {
@@ -36,33 +30,47 @@ public class Propellers {
 
     public void turnDrone(String dir) {
         Direction newDirection = Direction.valueOf(dir);
-        
-        // if the turn can be made directly, simply update the direction
+        // if the turn can be made directly, update the direction; // otherwise, make a U-Turn
         if (canDroneMakeTurn(newDirection)) {
-            gps.setDirection(newDirection);
-            JSONObject decision = new JSONObject();
-            decision.put("action", "heading");
-            decision.put("parameters", new JSONObject().put("direction", dir));
-            decisionQueue.add(decision);
-        }
-        // otherwise, make two turns before proceeding; prevents the drone from flipping
-        else {
-            turnRight();
-            turnRight();
+            registerTurn(newDirection);
+        } else {
+            makeUTurn();
         }
     } 
 
     public void moveForward() {
+        // creates a JSONObject to register the basic flying movement
         JSONObject decision = new JSONObject();
         decision.put("action", "fly"); 
         decisionQueue.add(decision);
     }
 
-    public JSONObject getMovements() {
+    public JSONObject getMovement() {
         return decisionQueue.poll();  // retrieves and retruns decision to be made
     }
     
     public boolean inUTurn() {
         return (!decisionQueue.isEmpty()); // checks if the drone is in the middle of a U-Turn
+    }
+
+    private void makeUTurn() {
+        // initial placeholder: will need to implement logic to determine whether to make left or right U-Turn using the radar
+            // GROUP MEMBERS NEED TO CODE RADAR CLASS
+        turnRight();
+        turnRight();
+    }
+
+    private void registerTurn(Direction newDirection) {
+        gps.setDirection(newDirection);  // sets new direction for the drone 
+
+        // creates a JSONObject to store the parameter information
+        JSONObject parameters = new JSONObject();
+        parameters.put("direction", gps.getDirection());
+
+        // creates a JSONObject to register the action and its corresponding parameters
+        JSONObject decision = new JSONObject();
+        decision.put("action", "heading");
+        decision.put("parameters", parameters);
+        decisionQueue.add(decision);
     }
 }

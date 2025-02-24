@@ -15,6 +15,16 @@ public class GPS {
         return direction.ordinal();
     }
 
+    public Direction getRightDirection() {
+        int rightOrdinal = (direction.ordinal() + 1) % 4;
+        return Direction.values()[rightOrdinal];
+    }
+
+    public Direction getLeftDirection() {
+        int leftOrdinal = (direction.ordinal() + 3) % 4;
+        return Direction.values()[leftOrdinal];
+    }
+
     public void setDirection(Direction direction) {
         this.direction = direction;
     }

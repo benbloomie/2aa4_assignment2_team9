@@ -42,7 +42,7 @@ public class DroneState {
     }
     
     public JSONObject getDecision() {
-        return propellers.getMovements();
+        return propellers.getMovement();
     }
 
     public boolean isDroneMoving() {
