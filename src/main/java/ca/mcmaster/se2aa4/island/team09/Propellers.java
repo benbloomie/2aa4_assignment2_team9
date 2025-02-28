@@ -14,14 +14,12 @@ public class Propellers {
     }
 
     public void turnRight() {
-        Direction newDirection = gps.getRightDirection();
-        registerTurn(newDirection);
+        registerTurn(gps.getRightDirection());
     }
 
     // not sure if i will need this, but leaving in for now
     public void turnLeft() {
-        Direction newDirection = gps.getLeftDirection();
-        registerTurn(newDirection);
+        registerTurn(gps.getLeftDirection());
     }
 
     private boolean canDroneMakeTurn(Direction newDirection) {
@@ -29,14 +27,14 @@ public class Propellers {
         return Math.abs(gps.getDirectionOrdinal() - newDirection.ordinal()) != 2;
     }
 
-    public void turnDrone(String dir) {
-        Direction newDirection = Direction.valueOf(dir);
+    public void turnDrone(String turnDirection) {
+        Direction newDirection = Direction.valueOf(turnDirection);
         // if the turn can be made directly, update the direction; // otherwise, make a U-Turn
         if (canDroneMakeTurn(newDirection)) {
             registerTurn(newDirection);
         } else {
             makeUTurn();
-        }
+        } 
     } 
 
     public void moveForward() {
@@ -58,6 +56,9 @@ public class Propellers {
     }
 
     private void makeUTurn() {
+        
+
+
         // initial placeholder: will need to implement logic to determine whether to make left or right U-Turn using the radar
             // GROUP MEMBERS NEED TO CODE RADAR CLASS
         turnRight();
@@ -65,16 +66,7 @@ public class Propellers {
     }
 
     private void registerTurn(Direction newDirection) {
-        gps.setDirection(newDirection);  // sets new direction for the drone 
-
-        // creates a JSONObject to store the parameter information
-        JSONObject parameters = new JSONObject();
-        parameters.put("direction", gps.getDirection());
-
-        // creates a JSONObject to register the action and its corresponding parameters
-        JSONObject decision = new JSONObject();
-        decision.put("action", "heading");
-        decision.put("parameters", parameters);
-        decisionQueue.add(decision);
+        action = new Turn(newDirection, gps);
+        decisionQueue.add(action.performAction());
     }
 }
