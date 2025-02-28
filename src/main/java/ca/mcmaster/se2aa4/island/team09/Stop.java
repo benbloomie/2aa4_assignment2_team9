@@ -3,12 +3,18 @@ package ca.mcmaster.se2aa4.island.team09;
 import org.json.JSONObject;
 
 public class Stop implements PropellerAction {
+    private final CommandCenter commands;
+
+    public Stop(CommandCenter commands) {
+        this.commands = commands; 
+    }
 
     @Override
-    public JSONObject performAction() {
+    public void performAction() {
         JSONObject decision = new JSONObject();
+        // adds the stop action to the queue of commands
         decision.put("action", "stop");   
-        return decision; 
+        commands.addCommand(decision);
     }
 }
 

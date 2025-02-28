@@ -1,7 +1,6 @@
 package ca.mcmaster.se2aa4.island.team09;
 
-import org.json.JSONObject;
-
+// public interface to handle the different actions of the drone
 public interface PropellerAction {
-    public JSONObject performAction();
+    public void performAction();
 }

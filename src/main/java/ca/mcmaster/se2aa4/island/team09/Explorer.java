@@ -36,19 +36,19 @@ public class Explorer implements IExplorerRaid {
         // if drone is moving, complete right turn (KEEP THIS)
         if (drone.isDroneMoving()) {
         }
-        // testing moving forward
+        // testing moving forward; flies 10 times
         if (moveForward < 10) {
             drone.moveForward();
             moveForward++;
         }
-        // testing turning
+        // testing turning; turns 5 times
         else if (turnCount <= 4){
             drone.turnRight();
             turnCount++;
         }
         // testing u-turn
-        else if(uTurnCount < 2) {
-            drone.turnRight();
+        else if(uTurnCount < 1) {
+            drone.turnDrone("N");
             uTurnCount++;
         }
         // stop after testing all movements

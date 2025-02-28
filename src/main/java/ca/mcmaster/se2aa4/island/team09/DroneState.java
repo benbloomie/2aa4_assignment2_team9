@@ -6,10 +6,12 @@ public class DroneState {
     private GPS gps;
     private Propellers propellers;
     private Battery battery;
+    private CommandCenter commands;
 
     public DroneState(String direction, Battery battery) {
         this.gps = new GPS(Direction.valueOf(direction));
-        this.propellers = new Propellers(this.gps);
+        this.commands = new CommandCenter();
+        this.propellers = new Propellers(this.gps, commands);
         this.battery = battery;
     }
 
@@ -22,7 +24,13 @@ public class DroneState {
     }
 
     public void turnRight() {
-        propellers.turnRight();
+        String turnDirection = gps.getRightDirection().toString();
+        propellers.turnDrone(turnDirection);
+    }
+
+    public void turnLeft() {
+        String turnDirection = gps.getLeftDirection().toString();
+        propellers.turnDrone(turnDirection);
     }
 
     public int getBatteryLevel() {
@@ -40,17 +48,16 @@ public class DroneState {
     public void moveForward() {
         propellers.moveForward();
     }
-    
-    public JSONObject getDecision() {
-        return propellers.getMovement();
-    }
-
-    public boolean isDroneMoving() {
-        return propellers.inUTurn();
-    }
 
     public void stopDrone() {
         propellers.stopDrone();
     }
+    
+    public JSONObject getDecision() {
+        return commands.getNextCommand();  // retrieves action from commands queue to perform the corresponding action
+    }
 
+    public boolean isDroneMoving() {
+        return commands.isDroneInMotion();
+    }
 }

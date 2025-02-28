@@ -3,11 +3,17 @@ package ca.mcmaster.se2aa4.island.team09;
 import org.json.JSONObject;
 
 public class Fly implements PropellerAction {
+    private final CommandCenter commands;
+
+    public Fly(CommandCenter commands) {
+        this.commands = commands; 
+    }
 
     @Override
-    public JSONObject performAction() {
+    public void performAction() {
         JSONObject decision = new JSONObject();
-        decision.put("action", "fly"); 
-        return decision;
+        // adds the fly action to the queue of commands
+        decision.put("action", "fly");  
+        commands.addCommand(decision);
     }
 }

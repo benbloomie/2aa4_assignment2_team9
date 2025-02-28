@@ -12,15 +12,17 @@ public class GPS {
     }
 
     public int getDirectionOrdinal() {
-        return direction.ordinal();
+        return direction.ordinal();  // gets the corresponding direction value for calculations
     }
 
     public Direction getRightDirection() {
+        // computes the direction to the right based on the directions ordinal in the direction enum
         int rightOrdinal = (direction.ordinal() + 1) % 4;
         return Direction.values()[rightOrdinal];
     }
 
     public Direction getLeftDirection() {
+        // computes the direction to the left based on the directions ordinal in the direction enum
         int leftOrdinal = (direction.ordinal() + 3) % 4;
         return Direction.values()[leftOrdinal];
     }

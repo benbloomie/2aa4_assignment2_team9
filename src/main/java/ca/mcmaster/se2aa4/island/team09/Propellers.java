@@ -1,72 +1,28 @@
 package ca.mcmaster.se2aa4.island.team09;
-import org.json.JSONObject;
-import java.util.Queue;
-import java.util.LinkedList;
 
+// propellers class controls which action is called
 public class Propellers {
-    private GPS gps;
-    private Queue<JSONObject> decisionQueue;
-    private PropellerAction action;
+    private final Turn turnAction;
+    private final Fly flyAction;
+    private final Stop stopAction;
 
-    public Propellers(GPS gps) {
-        this.gps = gps;
-        this.decisionQueue = new LinkedList<>();
+    public Propellers(GPS gps, CommandCenter commands) {
+        this.turnAction = new Turn(gps, commands);
+        this.flyAction = new Fly(commands);
+        this.stopAction = new Stop(commands);
     }
 
-    public void turnRight() {
-        registerTurn(gps.getRightDirection());
-    }
-
-    // not sure if i will need this, but leaving in for now
-    public void turnLeft() {
-        registerTurn(gps.getLeftDirection());
-    }
-
-    private boolean canDroneMakeTurn(Direction newDirection) {
-        // if the direction value does not differ by 2, the turn can be made directly
-        return Math.abs(gps.getDirectionOrdinal() - newDirection.ordinal()) != 2;
-    }
-
+    // calls the corresponding realization to perform the action
     public void turnDrone(String turnDirection) {
-        Direction newDirection = Direction.valueOf(turnDirection);
-        // if the turn can be made directly, update the direction; // otherwise, make a U-Turn
-        if (canDroneMakeTurn(newDirection)) {
-            registerTurn(newDirection);
-        } else {
-            makeUTurn();
-        } 
+        turnAction.setTurnDirection(turnDirection);
+        turnAction.performAction();    
     } 
 
     public void moveForward() {
-        action = new Fly();
-        decisionQueue.add(action.performAction());
+        flyAction.performAction();
     }
 
     public void stopDrone() {
-        action = new Stop();
-        decisionQueue.add(action.performAction());
+        stopAction.performAction();    
     }
-
-    public JSONObject getMovement() {
-        return decisionQueue.poll();  // retrieves and retruns decision to be made
-    }
-    
-    public boolean inUTurn() {
-        return (!decisionQueue.isEmpty()); // checks if the drone is in the middle of a U-Turn
-    }
-
-    private void makeUTurn() {
-        
-
-
-        // initial placeholder: will need to implement logic to determine whether to make left or right U-Turn using the radar
-            // GROUP MEMBERS NEED TO CODE RADAR CLASS
-        turnRight();
-        turnRight();
-    }
-
-    private void registerTurn(Direction newDirection) {
-        action = new Turn(newDirection, gps);
-        decisionQueue.add(action.performAction());
-    }
-}
+} 
