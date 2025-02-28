@@ -35,31 +35,27 @@ public class Explorer implements IExplorerRaid {
         JSONObject decision;
         // if drone is moving, complete right turn (KEEP THIS)
         if (drone.isDroneMoving()) {
-            return drone.getDecision().toString();
         }
         // testing moving forward
         if (moveForward < 10) {
             drone.moveForward();
-            decision = drone.getDecision();
             moveForward++;
         }
         // testing turning
         else if (turnCount <= 4){
             drone.turnRight();
-            decision = drone.getDecision();
             turnCount++;
         }
         // testing u-turn
         else if(uTurnCount < 2) {
             drone.turnRight();
-            decision = drone.getDecision();
             uTurnCount++;
         }
         // stop after testing all movements
         else {
-            decision = new JSONObject();
-            decision.put("action", "stop");
+            drone.stopDrone();
         }
+        decision = drone.getDecision();
         return decision.toString();
     }
 

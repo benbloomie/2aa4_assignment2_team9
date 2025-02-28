@@ -49,4 +49,8 @@ public class DroneState {
         return propellers.inUTurn();
     }
 
+    public void stopDrone() {
+        propellers.stopDrone();
+    }
+
 }

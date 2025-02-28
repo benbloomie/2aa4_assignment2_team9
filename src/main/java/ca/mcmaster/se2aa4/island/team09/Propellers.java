@@ -6,6 +6,7 @@ import java.util.LinkedList;
 public class Propellers {
     private GPS gps;
     private Queue<JSONObject> decisionQueue;
+    private PropellerAction action;
 
     public Propellers(GPS gps) {
         this.gps = gps;
@@ -39,10 +40,13 @@ public class Propellers {
     } 
 
     public void moveForward() {
-        // creates a JSONObject to register the basic flying movement
-        JSONObject decision = new JSONObject();
-        decision.put("action", "fly"); 
-        decisionQueue.add(decision);
+        action = new Fly();
+        decisionQueue.add(action.performAction());
+    }
+
+    public void stopDrone() {
+        action = new Stop();
+        decisionQueue.add(action.performAction());
     }
 
     public JSONObject getMovement() {
