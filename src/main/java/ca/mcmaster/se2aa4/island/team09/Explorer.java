@@ -18,6 +18,7 @@ public class Explorer implements IExplorerRaid {
     private int moveForward = 0;
     private int turnCount = 0;
     private int uTurnCount = 0;
+    private int even = 0;
 
     @Override
     public void initialize(String s) {
@@ -40,14 +41,18 @@ public class Explorer implements IExplorerRaid {
     public String takeDecision() {
         JSONObject decision;
 
-        radar.check();
-
+    
         // if drone is moving, complete right turn (KEEP THIS)
         if (drone.isDroneMoving()) {
             return drone.getDecision().toString();
         }
+        //radar scan
+        if (even % 2 == 0){ // logic of this is not exactly behaving as expected (only runs one time)
+            even++;
+            decision = radar.check();
+        }
         // testing moving forward
-        if (moveForward < 10) {
+        else if (moveForward < 10) {
             drone.moveForward();
             decision = drone.getDecision();
             moveForward++;

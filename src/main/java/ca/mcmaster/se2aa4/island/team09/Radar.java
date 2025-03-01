@@ -23,8 +23,11 @@ public class Radar {
         return decision;
     }
 
-    public void check(){
+    public JSONObject check(){
         logger.info("DIRECTION CHECK");
+        Direction north = Direction.N;
+        //Direction east = Direction.E;
+        return getEcho(north);
     }
 
     //use getEcho class to find forward
@@ -51,8 +54,6 @@ public class Radar {
         // should check boundaires for other directions to determine which way the drone should turn
         return Direction.W;  // placeholder
     }
-
-
 
 
 }
