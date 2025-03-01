@@ -1,17 +1,19 @@
 package ca.mcmaster.se2aa4.island.team09;
 
 import java.io.StringReader;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import eu.ace_design.island.bot.IExplorerRaid;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+
+import eu.ace_design.island.bot.IExplorerRaid;
 
 public class Explorer implements IExplorerRaid {
 
     private final Logger logger = LogManager.getLogger();
     private DroneState drone;
+    private Radar radar;
     // TEMPORARY TESTING VARIABLES
     private int moveForward = 0;
     private int turnCount = 0;
@@ -25,6 +27,10 @@ public class Explorer implements IExplorerRaid {
         String startingDirection = info.getString("heading").toUpperCase();
         Integer batteryCapacity = info.getInt("budget");
         drone = new DroneState(startingDirection, new Battery(batteryCapacity));
+
+        radar = new Radar();
+        logger.info("Created instance of radar on drone");
+        
         logger.info("The drone is facing {}", drone.getDirection());
         logger.info("Battery level is {}", drone.getBatteryLevel());
     }
@@ -33,6 +39,9 @@ public class Explorer implements IExplorerRaid {
     @Override
     public String takeDecision() {
         JSONObject decision;
+
+        radar.check();
+
         // if drone is moving, complete right turn (KEEP THIS)
         if (drone.isDroneMoving()) {
             return drone.getDecision().toString();
