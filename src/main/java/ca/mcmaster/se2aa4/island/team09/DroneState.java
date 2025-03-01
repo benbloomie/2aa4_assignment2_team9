@@ -11,7 +11,7 @@ public class DroneState {
     public DroneState(String direction, Battery battery) {
         this.gps = new GPS(Direction.valueOf(direction));
         this.commands = new CommandCenter();
-        this.propellers = new Propellers(this.gps, commands);
+        this.propellers = new Propellers();
         this.battery = battery;
     }
 
@@ -19,26 +19,20 @@ public class DroneState {
         return gps.getDirection();
     }
 
+    public GPS getGPS() {
+        return gps;
+    }
+
     public void turnDrone(String newDirection) {
-        propellers.turnDrone(newDirection);
-    }
-
-    public void turnRight() {
-        String turnDirection = gps.getRightDirection().toString();
-        propellers.turnDrone(turnDirection);
-    }
-
-    public void turnLeft() {
-        String turnDirection = gps.getLeftDirection().toString();
-        propellers.turnDrone(turnDirection);
+        propellers.turnDrone(newDirection, gps, commands);
     }
 
     public int getBatteryLevel() {
         return battery.getBattery();
     }
 
-    public void useBattery(int batteryUsed) {
-        battery.updateBattery(batteryUsed);
+    public void consumeBattery(int batteryUsed) {
+        battery.consumeBattery(batteryUsed);
     }
 
     public boolean isDroneDead() {
@@ -46,11 +40,11 @@ public class DroneState {
     }
 
     public void moveForward() {
-        propellers.moveForward();
+        propellers.moveForward(commands);
     }
 
     public void stopDrone() {
-        propellers.stopDrone();
+        propellers.stopDrone(commands);
     }
     
     public JSONObject getDecision() {

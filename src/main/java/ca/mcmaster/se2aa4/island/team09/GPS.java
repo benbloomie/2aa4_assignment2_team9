@@ -30,11 +30,4 @@ public class GPS {
     public void setDirection(Direction direction) {
         this.direction = direction;
     }
-
-    public void updateDirection(int turnValue) {
-        // calculates the ordinal of the new direction using modular arithmetic
-        int newDirection = (direction.ordinal() + turnValue) % 4;  
-        direction = Direction.values()[newDirection];  // updates new direction using its ordinal
-
-    }
 }

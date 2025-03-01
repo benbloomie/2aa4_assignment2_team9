@@ -7,9 +7,10 @@ public class Turn implements PropellerAction {
     private Direction turnDirection;
     private GPS gps;
 
-    public Turn(GPS gps, CommandCenter commands) {
+    public Turn(GPS gps, CommandCenter commands, String turnDirection) {
         this.gps = gps;
         this.commands = commands;
+        this.turnDirection = Direction.valueOf(turnDirection);
     }
 
     @Override
@@ -31,9 +32,6 @@ public class Turn implements PropellerAction {
         commands.addCommand(decision);  // adds action to commands queue
     }
 
-    public void setTurnDirection(String turnDirection) {
-        this.turnDirection = Direction.valueOf(turnDirection);
-    }
 
     public void turnRight() {
         turnDirection = gps.getRightDirection();  // updates turning direction to make proper turn

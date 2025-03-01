@@ -12,6 +12,7 @@ public class Explorer implements IExplorerRaid {
 
     private final Logger logger = LogManager.getLogger();
     private DroneState drone;
+    private GPS gps;  // explorer should also have access to the gps of the drone to determine how it should move
     // TEMPORARY TESTING VARIABLES
     private int moveForward = 0;
     private int turnCount = 0;
@@ -22,9 +23,13 @@ public class Explorer implements IExplorerRaid {
         logger.info("** Initializing the Exploration Command Center");
         JSONObject info = new JSONObject(new JSONTokener(new StringReader(s)));
         logger.info("** Initialization info:\n {}",info.toString(2));
+
         String startingDirection = info.getString("heading").toUpperCase();
         Integer batteryCapacity = info.getInt("budget");
-        drone = new DroneState(startingDirection, new Battery(batteryCapacity));
+
+        this.drone = new DroneState(startingDirection, new Battery(batteryCapacity));
+        this.gps = drone.getGPS();
+
         logger.info("The drone is facing {}", drone.getDirection());
         logger.info("Battery level is {}", drone.getBatteryLevel());
     }
@@ -43,7 +48,7 @@ public class Explorer implements IExplorerRaid {
         }
         // testing turning; turns 5 times
         else if (turnCount <= 4){
-            drone.turnRight();
+            drone.turnDrone(gps.getRightDirection().toString());
             turnCount++;
         }
         // testing u-turn
@@ -71,7 +76,7 @@ public class Explorer implements IExplorerRaid {
         logger.info("Additional information received: {}", extraInfo);
 
         // stuff i have added
-        drone.useBattery(cost);
+        drone.consumeBattery(cost);
         logger.info("The battery of the drone is {}", drone.getBatteryLevel());
         // something to check radar status??
     }

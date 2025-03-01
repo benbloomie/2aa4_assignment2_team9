@@ -11,7 +11,7 @@ public class Battery {
         this.battery = battery;
     }
 
-    public void updateBattery(int amountUsed) {
+    public void consumeBattery(int amountUsed) {
         // ensures the amount used is not greater than what the drone has left
         if (battery >= amountUsed) {
             battery = battery - amountUsed;
