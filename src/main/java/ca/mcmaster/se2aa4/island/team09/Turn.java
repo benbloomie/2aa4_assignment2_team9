@@ -32,7 +32,6 @@ public class Turn implements PropellerAction {
         commands.addCommand(decision);  // adds action to commands queue
     }
 
-
     public void turnRight() {
         turnDirection = gps.getRightDirection();  // updates turning direction to make proper turn
         performAction();

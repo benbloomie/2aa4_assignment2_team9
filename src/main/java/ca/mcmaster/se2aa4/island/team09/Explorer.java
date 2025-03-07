@@ -7,12 +7,14 @@ import org.apache.logging.log4j.Logger;
 import eu.ace_design.island.bot.IExplorerRaid;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import java.util.Map;
 
 public class Explorer implements IExplorerRaid {
 
     private final Logger logger = LogManager.getLogger();
+    private CreekStorage creekStorage;
     private DroneState drone;
-    private GPS gps;  // explorer should also have access to the gps of the drone to determine how it should move
+    private GPS gps;  // explorer should also have access to the gps of the drone to determine how it should move 
     // TEMPORARY TESTING VARIABLES
     private int moveForward = 0;
     private int turnCount = 0;
@@ -22,6 +24,7 @@ public class Explorer implements IExplorerRaid {
     public void initialize(String s) {
         logger.info("** Initializing the Exploration Command Center");
         JSONObject info = new JSONObject(new JSONTokener(new StringReader(s)));
+        this.creekStorage = new CreekStorage();
         logger.info("** Initialization info:\n {}",info.toString(2));
 
         String startingDirection = info.getString("heading").toUpperCase();
