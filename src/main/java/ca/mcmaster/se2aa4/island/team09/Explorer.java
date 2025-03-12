@@ -21,7 +21,7 @@ public class Explorer implements IExplorerRaid {
     private int moveForward = 0;
     private int turnCount = 0;
     private int uTurnCount = 0;
-    private int even = 0;
+    private int numOfEchos;
 
     @Override
     public void initialize(String s) {
@@ -91,7 +91,9 @@ public class Explorer implements IExplorerRaid {
         // something to check radar status??
 
         if (extraInfo.length() == 2){
-
+            radarManager.setJSON(extraInfo);
+            logger.info("Radar Status: " + radarManager.getStatus(numOfEchos));
+            numOfEchos++;
         }
     }
 

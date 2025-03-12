@@ -12,21 +12,12 @@ public class RadarManager {
     private int radarLength;
     private ArrayList<Object> radarPair;
     
-
-    
-
     public void setJSON(JSONObject extras){
         this.extras = extras;
+        updateStatus();
     }
 
-
-    //Direction.valueOf(input);
-
-    currentStatus(){
-
-    }
-
-    updateStatus(){
+    private void updateStatus(){
         range = extras.getInt("range");
         String foundString = new String("");
         foundString = extras.getString("found");
@@ -36,10 +27,11 @@ public class RadarManager {
         radarFounds.add(found);
     }
 
-    public ArrayList<Object> getStatus(){
-        radarRanges.add(range);
-        radarFounds.add(found);
-        return radar
+    public ArrayList<Object> getStatus(int index){
+        radarPair.clear();
+        radarPair.add(radarRanges.get(index));
+        radarPair.add(radarFounds.get(index));
+        return radarPair;
     }
     
 }
