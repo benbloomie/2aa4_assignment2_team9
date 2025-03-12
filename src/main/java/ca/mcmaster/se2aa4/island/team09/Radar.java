@@ -10,17 +10,17 @@ public class Radar {
     public Radar() {
     }
 
+
     public boolean isBoundaryAhead(Direction direction) {
         // need to add logic
         return false;  // placeholder
     }
 
-    public JSONObject getEcho(Direction direction, GPS gps) {
+    public void getEcho(Direction echoDirection, GPS gps, CommandCenter commandCenter) {
         JSONObject decision = new JSONObject();
         decision.put("action", "echo");
-        decision.put("parameters", new JSONObject().put("direction", direction.toString()));
-        
-        return decision;
+        decision.put("parameters", echoDirection);
+        commandCenter.addCommand(decision);
     }
 
     private void setDirections(GPS gps){
@@ -37,7 +37,6 @@ public class Radar {
         JSONObject decision = new JSONObject();
         decision.put("action", "echo");
         decision.put("parameters", parameters);
-        
     }
 
     public JSONObject check(){
@@ -47,20 +46,12 @@ public class Radar {
         return getEcho(north);
     }
 
+    
+
     private JSONObject scanResult(){
         JSONObject decision = new JSONObject();
         decision.put("result", "echo");
         return decision;
     }
-
-
-    //updateDirection
-    //use getEcho class to find forward
-    
-    //use getEcho class to find right
-
-    //use getEcho class to find left
-
-    //need a way to check the echo status (must incorporate echo status class)
 
 }
