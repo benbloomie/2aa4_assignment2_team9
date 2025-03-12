@@ -8,12 +8,15 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import eu.ace_design.island.bot.IExplorerRaid;
+import scala.math.Fractional;
 
 public class Explorer implements IExplorerRaid {
 
     private final Logger logger = LogManager.getLogger();
     private DroneState drone;
     private GPS gps;  // explorer should also have access to the gps of the drone to determine how it should move
+    private Radar radar;
+    private RadarManager radarManager;
     // TEMPORARY TESTING VARIABLES
     private int moveForward = 0;
     private int turnCount = 0;
@@ -28,9 +31,12 @@ public class Explorer implements IExplorerRaid {
 
         String startingDirection = info.getString("heading").toUpperCase();
         Integer batteryCapacity = info.getInt("budget");
+        
 
         this.drone = new DroneState(startingDirection, new Battery(batteryCapacity));
         this.gps = drone.getGPS();
+
+    
 
         logger.info("The drone is facing {}", drone.getDirection());
         logger.info("Battery level is {}", drone.getBatteryLevel());
@@ -83,6 +89,10 @@ public class Explorer implements IExplorerRaid {
         drone.consumeBattery(cost);
         logger.info("The battery of the drone is {}", drone.getBatteryLevel());
         // something to check radar status??
+
+        if (extraInfo.length() == 2){
+
+        }
     }
 
     @Override
