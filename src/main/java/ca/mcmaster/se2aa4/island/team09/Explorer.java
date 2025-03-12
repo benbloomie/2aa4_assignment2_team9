@@ -1,12 +1,13 @@
 package ca.mcmaster.se2aa4.island.team09;
 
 import java.io.StringReader;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import eu.ace_design.island.bot.IExplorerRaid;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+
+import eu.ace_design.island.bot.IExplorerRaid;
 
 public class Explorer implements IExplorerRaid {
 
@@ -17,6 +18,7 @@ public class Explorer implements IExplorerRaid {
     private int moveForward = 0;
     private int turnCount = 0;
     private int uTurnCount = 0;
+    private int even = 0;
 
     @Override
     public void initialize(String s) {
@@ -38,6 +40,8 @@ public class Explorer implements IExplorerRaid {
     @Override
     public String takeDecision() {
         JSONObject decision;
+
+    
         // if drone is moving, complete right turn (KEEP THIS)
         if (drone.isDroneMoving()) {
         }
