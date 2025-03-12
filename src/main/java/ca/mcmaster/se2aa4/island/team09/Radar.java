@@ -10,7 +10,6 @@ public class Radar {
     public Radar() {
     }
 
-
     public boolean isBoundaryAhead(Direction direction) {
         // need to add logic
         return false;  // placeholder
@@ -27,31 +26,6 @@ public class Radar {
         Direction noseDirection = gps.getDirection();
         Direction leftWingDirection = gps.getLeftDirection();
         Direction rightWingDirection = gps.getRightDirection();
-    }
-
-    private void noseEcho(){
-        JSONObject parameters = new JSONObject();
-        parameters.put("direction", noseDirection);
-
-        // creates a JSONObject to register the action and its corresponding parameters
-        JSONObject decision = new JSONObject();
-        decision.put("action", "echo");
-        decision.put("parameters", parameters);
-    }
-
-    public JSONObject check(){
-        logger.info("DIRECTION CHECK");
-        Direction north = Direction.N;
-        //Direction east = Direction.E;
-        return getEcho(north);
-    }
-
-    
-
-    private JSONObject scanResult(){
-        JSONObject decision = new JSONObject();
-        decision.put("result", "echo");
-        return decision;
     }
 
 }
