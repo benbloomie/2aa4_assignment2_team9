@@ -15,12 +15,29 @@ public class Radar {
         return false;  // placeholder
     }
 
-    public JSONObject getEcho(Direction direction) {
+    public JSONObject getEcho(Direction direction, GPS gps) {
         JSONObject decision = new JSONObject();
         decision.put("action", "echo");
         decision.put("parameters", new JSONObject().put("direction", direction.toString()));
         
         return decision;
+    }
+
+    private void setDirections(GPS gps){
+        Direction noseDirection = gps.getDirection();
+        Direction leftWingDirection = gps.getLeftDirection();
+        Direction rightWingDirection = gps.getRightDirection();
+    }
+
+    private void noseEcho(){
+        JSONObject parameters = new JSONObject();
+        parameters.put("direction", noseDirection);
+
+        // creates a JSONObject to register the action and its corresponding parameters
+        JSONObject decision = new JSONObject();
+        decision.put("action", "echo");
+        decision.put("parameters", parameters);
+        
     }
 
     public JSONObject check(){
@@ -30,30 +47,20 @@ public class Radar {
         return getEcho(north);
     }
 
-    //use getEcho class to find forward
+    private JSONObject scanResult(){
+        JSONObject decision = new JSONObject();
+        decision.put("result", "echo");
+        return decision;
+    }
 
+
+    //updateDirection
+    //use getEcho class to find forward
+    
     //use getEcho class to find right
 
     //use getEcho class to find left
 
     //need a way to check the echo status (must incorporate echo status class)
-
-
-
-    private Direction checkSurrondingsNorth() {
-        // should check boundaires for other directions to determine which way the drone should turn
-        return Direction.N;  // placeholder
-    }
-
-    private Direction checkSurrondingsEast() {
-        // should check boundaires for other directions to determine which way the drone should turn
-        return Direction.E;  // placeholder
-    }
-
-    private Direction checkSurrondingsWest() {
-        // should check boundaires for other directions to determine which way the drone should turn
-        return Direction.W;  // placeholder
-    }
-
 
 }
