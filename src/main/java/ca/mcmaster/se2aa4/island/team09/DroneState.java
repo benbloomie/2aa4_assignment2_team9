@@ -48,10 +48,14 @@ public class DroneState {
     }
     
     public JSONObject getDecision() {
-        return commands.getNextCommand();  // retrieves action from commands queue to perform the corresponding action
+        return commands.getNextCommand();
     }
 
     public boolean isDroneMoving() {
         return commands.isDroneInMotion();
+    }
+
+    public CommandCenter getCommandCenter() {
+        return this.commands;
     }
 }

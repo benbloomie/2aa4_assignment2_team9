@@ -17,6 +17,7 @@ public class Explorer implements IExplorerRaid {
     private GPS gps;  // explorer should also have access to the gps of the drone to determine how it should move
     private Radar radar;
     private RadarManager radarManager;
+    private PhotoScanner photoScanner;
     // TEMPORARY TESTING VARIABLES
     private int moveForward = 0;
     private int turnCount = 0;
@@ -35,6 +36,7 @@ public class Explorer implements IExplorerRaid {
 
         this.drone = new DroneState(startingDirection, new Battery(batteryCapacity));
         this.gps = drone.getGPS();
+        this.photoScanner = new PhotoScanner(drone.getCommandCenter());
 
     
 
