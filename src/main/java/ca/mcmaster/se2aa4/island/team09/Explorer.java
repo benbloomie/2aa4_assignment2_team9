@@ -90,7 +90,7 @@ public class Explorer implements IExplorerRaid {
         logger.info("The battery of the drone is {}", drone.getBatteryLevel());
         // something to check radar status??
 
-        if (extraInfo.length() == 2){
+        if (extraInfo.length() == 2){ // when extraInfo has 2 elements, it from the radar method 
             radarManager.setJSON(extraInfo);
             logger.info("Radar Status: " + radarManager.getStatus(numOfEchos));
             numOfEchos++;

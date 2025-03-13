@@ -15,17 +15,25 @@ public class Radar {
         return false;  // placeholder
     }
 
-    public void getEcho(Direction echoDirection, GPS gps, CommandCenter commandCenter) {
+    private void getEcho(Direction echoDirection, CommandCenter commandCenter) { // find the echo value and send it to the command center
         JSONObject decision = new JSONObject();
         decision.put("action", "echo");
         decision.put("parameters", echoDirection);
         commandCenter.addCommand(decision);
     }
 
-    private void setDirections(GPS gps){
+    public void noseEcho(GPS gps, CommandCenter commandCenter){ // find the echo value from the nose, and send it to the command center
         Direction noseDirection = gps.getDirection();
-        Direction leftWingDirection = gps.getLeftDirection();
-        Direction rightWingDirection = gps.getRightDirection();
+        getEcho(noseDirection, commandCenter);
     }
 
+    public void leftEcho(GPS gps, CommandCenter commandCenter){ // find the echo value from the left radar and send it to the command center
+        Direction leftWingDirection = gps.getLeftDirection();
+        getEcho(leftWingDirection, commandCenter);
+    }
+
+    public void rightEcho(GPS gps, CommandCenter commandCenter){ // find the echo value from the right radar and send it to the command center
+        Direction rightWingDirection = gps.getRightDirection();
+        getEcho(rightWingDirection, commandCenter);
+    }
 }
