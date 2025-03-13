@@ -21,7 +21,7 @@ public class PhotoScanner {
         this.lastScanResult = null;
     }
 
-    // Scan command to the drone
+    // Scan command for the drone
 
     public void scanArea() {
         JSONObject scanCommand = new JSONObject();
@@ -52,7 +52,7 @@ public class PhotoScanner {
             sites.add(sitesArray.getString(i));
         }
         
-        Store the last scan result
+        // Store the last scan result
         lastScanResult = new ScanResult(cost, biomes, creeks, sites); 
         return lastScanResult;
     }
