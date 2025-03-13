@@ -55,7 +55,7 @@ public class Explorer implements IExplorerRaid {
         if (drone.isDroneMoving()) {
         }
         // testing moving forward; flies 10 times
-        if (moveForward < 10) {
+        else if (moveForward < 10) {
             drone.moveForward();
             moveForward++;
         }

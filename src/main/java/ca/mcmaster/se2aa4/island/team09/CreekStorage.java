@@ -10,7 +10,7 @@ public class CreekStorage {
         this.creeks = new HashMap<>();
     }
 
-    public void storeCreek() {
+    public void storeCreek(Creek creek) {
         // NOT SURE HOW TO ACCESS POIS FILE
         //creeks.put(uId, new Creek(uId, x, y));
     }

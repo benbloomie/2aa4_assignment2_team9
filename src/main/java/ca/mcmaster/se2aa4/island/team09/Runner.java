@@ -8,6 +8,7 @@ public class Runner {
 
     public static void main(String[] args) {
         String filename = args[0];
+
         try {
             run(Explorer.class)
                     .exploring(new File(filename))
