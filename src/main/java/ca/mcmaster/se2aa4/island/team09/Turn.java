@@ -19,7 +19,10 @@ public class Turn implements PropellerAction {
             makeUTurn();
             return;
         }
+        gps.updateCoordinates();  // updates coordinates for first part of the turn (original direction)
         gps.setDirection(turnDirection);
+        gps.updateCoordinates();  // updates coordinates using new direction
+
         // creates a JSONObject to store the parameter information
         JSONObject parameters = new JSONObject();
         parameters.put("direction", gps.getDirection());
@@ -48,9 +51,14 @@ public class Turn implements PropellerAction {
     }
 
     private void makeUTurn() {
-        // initial placeholder: will need to implement logic to determine whether to make left or right U-Turn using the radar
-            // GROUP MEMBERS NEED TO CODE RADAR CLASS
-        turnRight();
-        turnRight();
+        // turns corresponding to the current direction it faces to continue the patrol
+        if (gps.getDirection().ordinal() < 2) {  // handles N and E turns
+            turnLeft();
+            turnLeft();
+        } 
+        else {  // handles S and W turns
+            turnRight();
+            turnRight();
+        }
     }
 }

@@ -8,8 +8,8 @@ public class DroneState {
     private Battery battery;
     private CommandCenter commands;
 
-    public DroneState(String direction, Battery battery) {
-        this.gps = new GPS(Direction.valueOf(direction));
+    public DroneState(String direction, Battery battery, Coordinate coordinates) {
+        this.gps = new GPS(Direction.valueOf(direction), coordinates);
         this.commands = new CommandCenter();
         this.propellers = new Propellers();
         this.battery = battery;

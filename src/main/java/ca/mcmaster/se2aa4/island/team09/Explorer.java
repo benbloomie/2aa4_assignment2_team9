@@ -6,10 +6,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import java.util.Map;
 
 import eu.ace_design.island.bot.IExplorerRaid;
-import scala.math.Fractional;
 
 public class Explorer implements IExplorerRaid {
 
@@ -34,12 +32,12 @@ public class Explorer implements IExplorerRaid {
 
         String startingDirection = info.getString("heading").toUpperCase();
         Integer batteryCapacity = info.getInt("budget");
+        // confused where we get the x and y positions from??
+        Integer xStart = 1; 
+        Integer yStart = 1;
         
-
-        this.drone = new DroneState(startingDirection, new Battery(batteryCapacity));
+        this.drone = new DroneState(startingDirection, new Battery(batteryCapacity), new Coordinate(xStart, yStart));
         this.gps = drone.getGPS();
-
-    
 
         logger.info("The drone is facing {}", drone.getDirection());
         logger.info("Battery level is {}", drone.getBatteryLevel());
@@ -49,8 +47,6 @@ public class Explorer implements IExplorerRaid {
     @Override
     public String takeDecision() {
         JSONObject decision;
-
-    
         // if drone is moving, complete right turn (KEEP THIS)
         if (drone.isDroneMoving()) {
         }
@@ -66,7 +62,7 @@ public class Explorer implements IExplorerRaid {
         }
         // testing u-turn
         else if(uTurnCount < 1) {
-            drone.turnDrone("N");
+            drone.turnDrone(gps.getOppositeDirection().toString());
             uTurnCount++;
         }
         // stop after testing all movements

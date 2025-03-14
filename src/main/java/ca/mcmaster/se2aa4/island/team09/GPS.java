@@ -2,9 +2,11 @@ package ca.mcmaster.se2aa4.island.team09;
 
 public class GPS {
     private Direction direction;
+    private Coordinate coordinates;
     
-    public GPS(Direction direction) {
+    public GPS(Direction direction, Coordinate coordinates) {
         this.direction = direction;
+        this.coordinates = coordinates;
     }
 
     public Direction getDirection() {
@@ -22,12 +24,20 @@ public class GPS {
     }
 
     public Direction getLeftDirection() {
-        // computes the direction to the left based on the directions ordinal in the direction enum
         int leftOrdinal = (direction.ordinal() + 3) % 4;
         return Direction.values()[leftOrdinal];
     }
 
+    public Direction getOppositeDirection() {
+        int oppositeOrdinal = (direction.ordinal() + 2) % 4;
+        return Direction.values()[oppositeOrdinal]; 
+    }
+
     public void setDirection(Direction direction) {
         this.direction = direction;
+    }
+
+    public void updateCoordinates() {
+        coordinates.adjustCoordinate(direction);
     }
 }
