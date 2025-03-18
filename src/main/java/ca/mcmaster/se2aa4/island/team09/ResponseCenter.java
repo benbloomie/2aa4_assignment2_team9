@@ -44,7 +44,7 @@ public class ResponseCenter {
         logger.info("Additional information received: {}", extraInfo);
         if (extraInfo.has("range")) {  // action was an ECHO
             actionProcessed = ActionType.ECHO;
-            radarManager.setJSON(extraInfo);
+            radarManager.updateStatus(extraInfo);
             logger.info("Radar Status: " + radarManager.getStatus(numOfEchos));
             numOfEchos++;
         }

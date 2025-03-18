@@ -43,7 +43,7 @@ public class Explorer implements IExplorerRaid {
         logger.info("Battery level is {}", drone.getBatteryLevel());
     }
 
-    // TEMPORARY TESTING
+    /*  TEMPORARY TESTING
     @Override
     public String takeDecision() {
         JSONObject decision;
@@ -71,19 +71,20 @@ public class Explorer implements IExplorerRaid {
         }
         decision = drone.getDecision();
         return decision.toString();
-    } 
+    } */
 
-    /*
+    
     @Override
     public String takeDecision() {
         ActionType prevAction = resultManager.getPreviousAction();
 
         if (drone.isInAction()) {
             JSONObject decision = drone.getDecision();
+            logger.info("Drone in action: {}", decision.toString());
             return decision.toString();
         }
 
-        if (prevAction == ActionType.MOVEMENT) {
+        else if (prevAction == ActionType.MOVEMENT) {
             drone.frontEcho();
         }
 
@@ -108,8 +109,9 @@ public class Explorer implements IExplorerRaid {
             drone.stopDrone();
         }
         JSONObject decision = drone.getDecision();
+        logger.info("Executing action: {}", decision.toString());
         return decision.toString();
-    } */
+    } 
 
     @Override
     public void acknowledgeResults(String s) {

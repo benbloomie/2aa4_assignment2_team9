@@ -17,10 +17,15 @@ public class Radar {
     }
 
     private void getEcho(Direction echoDirection, CommandCenter commandCenter) { // find the echo value and send it to the command center
+        // creates a JSONObject to store the parameter information
+        JSONObject parameters = new JSONObject();
+        parameters.put("direction", echoDirection);
+
+        // creates a JSONObject to register the action and its corresponding parameters
         JSONObject decision = new JSONObject();
         decision.put("action", "echo");
-        decision.put("parameters", echoDirection);
-        commandCenter.addCommand(decision);
+        decision.put("parameters", parameters);
+        commandCenter.addCommand(decision);  // adds action to commands queue
     }
 
     public void noseEcho(CommandCenter commandCenter){ // find the echo value from the nose, and send it to the command center
