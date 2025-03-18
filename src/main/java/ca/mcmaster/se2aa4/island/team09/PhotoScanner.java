@@ -1,27 +1,20 @@
 package ca.mcmaster.se2aa4.island.team09;
 
-import org.json.JSONObject;
 import org.json.JSONArray;
-import java.util.List;
+import org.json.JSONObject;
 import java.util.ArrayList;
-
-
+import java.util.List;
 
 public class PhotoScanner {
-    
-    //All mentions of scan will be replaced later with appropriate name.
-    
     private final CommandCenter commandCenter;
-
-    // private ScanResult lastScanResult; // Future feature to store last scan result
+    private ScanResult lastScanResult;
+    private ScanManager scanManager;
 
     public PhotoScanner(CommandCenter commandCenter) {
         this.commandCenter = commandCenter;
-
         this.lastScanResult = null;
+        this.scanManager = new ScanManager();
     }
-
-    // Scan command for the drone
 
     public void scanArea() {
         JSONObject scanCommand = new JSONObject();
@@ -29,36 +22,33 @@ public class PhotoScanner {
         commandCenter.addCommand(scanCommand);
     }
 
-    // Processes the scan response from drone
-    public processScanResponse(JSONObject response) {
+    public ScanResult processScanResponse(JSONObject response, DroneState drone) {
         int cost = response.getInt("cost");
         JSONObject extras = response.getJSONObject("extras");
-        
-        JSONArray biomesArray = extras.getJSONArray("biomes");
-        List<String> biomes = new ArrayList<>();
-        for (int i = 0; i < biomesArray.length(); i++) {
-            biomes.add(biomesArray.getString(i));
-        }
 
-        JSONArray creeksArray = extras.getJSONArray("creeks");
-        List<String> creeks = new ArrayList<>();
-        for (int i = 0; i < creeksArray.length(); i++) {
-            creeks.add(creeksArray.getString(i));
-        }
-        
-        JSONArray sitesArray = extras.getJSONArray("sites");
-        List<String> sites = new ArrayList<>();
-        for (int i = 0; i < sitesArray.length(); i++) {
-            sites.add(sitesArray.getString(i));
-        }
-        
-        // Store the last scan result
-        lastScanResult = new ScanResult(cost, biomes, creeks, sites); 
+        List<String> biomes = jsonArrayToList(extras.getJSONArray("biomes"));
+        List<String> creeks = jsonArrayToList(extras.getJSONArray("creeks"));
+        List<String> sites = jsonArrayToList(extras.getJSONArray("sites"));
+
+        lastScanResult = new ScanResult(cost, biomes, creeks, sites);
+        scanManager.storeScanResult(lastScanResult);
+        drone.consumeBattery(cost);
         return lastScanResult;
     }
 
-    // Future feature: Retrieve the last scan result
     public ScanResult getLastScanResult() {
         return lastScanResult;
+    }
+
+    public ScanManager getScanManager() {
+        return scanManager;
+    }
+
+    private List<String> jsonArrayToList(JSONArray jsonArray) {
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            list.add(jsonArray.getString(i));
+        }
+        return list;
     }
 }
