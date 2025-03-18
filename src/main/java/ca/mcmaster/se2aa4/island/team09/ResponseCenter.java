@@ -8,13 +8,13 @@ public class ResponseCenter {
     private final Logger logger = LogManager.getLogger();
     private DroneState drone;
     private RadarManager radarManager;
-    private int numOfEchos;
+    private int numOfEchoes;
     private ActionType actionProcessed;
 
     public ResponseCenter(DroneState drone) {
         this.drone = drone;
         this.radarManager = new RadarManager();
-        this.numOfEchos = 0;
+        this.numOfEchoes = -1;
     }
 
     public void acknowledge(JSONObject response) {
@@ -45,8 +45,9 @@ public class ResponseCenter {
         if (extraInfo.has("range")) {  // action was an ECHO
             actionProcessed = ActionType.ECHO;
             radarManager.updateStatus(extraInfo);
-            logger.info("Radar Status: " + radarManager.getStatus(numOfEchos));
-            numOfEchos++;
+            numOfEchoes++;
+            logger.info("Radar Status: [{},{}]", radarManager.getRangeStatus(numOfEchoes), radarManager.getEchoStatus(numOfEchoes));
+
         }
         else {  // action was a SCAN
 
@@ -55,5 +56,19 @@ public class ResponseCenter {
     
     public ActionType getPreviousAction() {
         return actionProcessed;
+    }
+
+    public boolean uTurnRequired() {
+        // if no actions have been processed yet, return false right away
+        if (actionProcessed == null) {
+            return false;
+        }
+        EchoStatus recentEcho = radarManager.getEchoStatus(numOfEchoes);
+        int rangeToFound = radarManager.getRangeStatus(numOfEchoes);
+        // if our next fly would put is out of bounds, indicate a U-Turn needs to be performed
+        if (recentEcho == EchoStatus.OUT_OF_RANGE && rangeToFound == 2) {
+            return true;
+        }
+        return false;
     }
 }

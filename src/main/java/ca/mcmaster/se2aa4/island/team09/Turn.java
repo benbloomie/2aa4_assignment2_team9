@@ -53,12 +53,12 @@ public class Turn implements PropellerAction {
     private void makeUTurn() {
         // turns corresponding to the current direction it faces to continue the patrol
         if (gps.getDirection().ordinal() < 2) {  // handles N and E turns
-            turnLeft();
-            turnLeft();
+            turnRight();
+            turnRight();
         } 
         else {  // handles S and W turns
-            turnRight();
-            turnRight();
+            turnLeft();
+            turnLeft();
         }
     }
 }

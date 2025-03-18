@@ -43,37 +43,8 @@ public class Explorer implements IExplorerRaid {
         logger.info("Battery level is {}", drone.getBatteryLevel());
     }
 
-    /*  TEMPORARY TESTING
-    @Override
-    public String takeDecision() {
-        JSONObject decision;
-        // if drone is moving, complete right turn (KEEP THIS)
-        if (drone.isInAction()) {
-        }
-        // testing moving forward; flies 10 times
-        else if (moveForward < 10) {
-            drone.moveForward();
-            moveForward++;
-        }
-        // testing turning; turns 5 times
-        else if (turnCount <= 4){
-            drone.turnDrone(gps.getRightDirection().toString());
-            turnCount++;
-        }
-        // testing u-turn
-        else if (uTurnCount < 1) {
-            drone.turnDrone(gps.getOppositeDirection().toString());
-            uTurnCount++;
-        }
-        // stop after testing all movements
-        else {
-            drone.stopDrone();
-        }
-        decision = drone.getDecision();
-        return decision.toString();
-    } */
-
-    
+    // FLIES UNTIL BATTERY DIES --> SOMETIMES GOES OUT OF BOUNDS????
+        // Don't think this will be a worry once the rest of the logic is done since the drone flies back
     @Override
     public String takeDecision() {
         ActionType prevAction = resultManager.getPreviousAction();
@@ -88,25 +59,13 @@ public class Explorer implements IExplorerRaid {
             drone.frontEcho();
         }
 
-        // testing moving forward; flies 10 times
-        else if (moveForward < 10) {
-            drone.moveForward();
-            moveForward++;
-        }
-        // testing turning; turns 5 times
-        else if (turnCount <= 4){
-            drone.turnDrone(gps.getRightDirection().toString());
-            turnCount++;
-        }
-        // testing u-turn
-        else if (uTurnCount < 1) {
-            drone.turnDrone(gps.getOppositeDirection().toString());
-            uTurnCount++;
-        }
-        // stop after testing all movements
         else {
-            
-            drone.stopDrone();
+            if (resultManager.uTurnRequired()) {  // if a U-Turn is needed, perform it
+                drone.turnDrone(gps.getOppositeDirection().toString());
+            }
+            else {  // otherwise, continue straight
+                drone.moveForward();
+            }
         }
         JSONObject decision = drone.getDecision();
         logger.info("Executing action: {}", decision.toString());
