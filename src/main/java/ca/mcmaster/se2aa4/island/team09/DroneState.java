@@ -7,12 +7,14 @@ public class DroneState {
     private Propellers propellers;
     private Battery battery;
     private CommandCenter commands;
+    private Radar radar;
 
     public DroneState(String direction, Battery battery, Coordinate coordinates) {
         this.gps = new GPS(Direction.valueOf(direction), coordinates);
         this.commands = new CommandCenter();
         this.propellers = new Propellers();
         this.battery = battery;
+        this.radar = new Radar(gps);
     }
 
     public Direction getDirection() {
@@ -51,7 +53,11 @@ public class DroneState {
         return commands.getNextCommand();  // retrieves action from commands queue to perform the corresponding action
     }
 
-    public boolean isDroneMoving() {
-        return commands.isDroneInMotion();
+    public boolean isInAction() {
+        return commands.isDroneInAction();
+    }
+
+    public void frontEcho() {
+        radar.noseEcho(commands);
     }
 }

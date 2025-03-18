@@ -14,14 +14,16 @@ public class Explorer implements IExplorerRaid {
     private final Logger logger = LogManager.getLogger();
     private CreekStorage creekStorage;
     private DroneState drone;
-    private Radar radar;
-    private RadarManager radarManager;
+    private ResponseCenter resultManager;
     private GPS gps;  // explorer should also have access to the gps of the drone to determine how it should move 
+
+    private int xStart = 0;
+    private int yStart = 0;
+
     // TEMPORARY TESTING VARIABLES
     private int moveForward = 0;
     private int turnCount = 0;
     private int uTurnCount = 0;
-    private int numOfEchos;
 
     @Override
     public void initialize(String s) {
@@ -32,11 +34,9 @@ public class Explorer implements IExplorerRaid {
 
         String startingDirection = info.getString("heading").toUpperCase();
         Integer batteryCapacity = info.getInt("budget");
-        // confused where we get the x and y positions from??
-        Integer xStart = 1; 
-        Integer yStart = 1;
         
         this.drone = new DroneState(startingDirection, new Battery(batteryCapacity), new Coordinate(xStart, yStart));
+        this.resultManager = new ResponseCenter(drone);
         this.gps = drone.getGPS();
 
         logger.info("The drone is facing {}", drone.getDirection());
@@ -48,7 +48,7 @@ public class Explorer implements IExplorerRaid {
     public String takeDecision() {
         JSONObject decision;
         // if drone is moving, complete right turn (KEEP THIS)
-        if (drone.isDroneMoving()) {
+        if (drone.isInAction()) {
         }
         // testing moving forward; flies 10 times
         else if (moveForward < 10) {
@@ -61,7 +61,7 @@ public class Explorer implements IExplorerRaid {
             turnCount++;
         }
         // testing u-turn
-        else if(uTurnCount < 1) {
+        else if (uTurnCount < 1) {
             drone.turnDrone(gps.getOppositeDirection().toString());
             uTurnCount++;
         }
@@ -71,29 +71,50 @@ public class Explorer implements IExplorerRaid {
         }
         decision = drone.getDecision();
         return decision.toString();
-    }
+    } 
+
+    /*
+    @Override
+    public String takeDecision() {
+        ActionType prevAction = resultManager.getPreviousAction();
+
+        if (drone.isInAction()) {
+            JSONObject decision = drone.getDecision();
+            return decision.toString();
+        }
+
+        if (prevAction == ActionType.MOVEMENT) {
+            drone.frontEcho();
+        }
+
+        // testing moving forward; flies 10 times
+        else if (moveForward < 10) {
+            drone.moveForward();
+            moveForward++;
+        }
+        // testing turning; turns 5 times
+        else if (turnCount <= 4){
+            drone.turnDrone(gps.getRightDirection().toString());
+            turnCount++;
+        }
+        // testing u-turn
+        else if (uTurnCount < 1) {
+            drone.turnDrone(gps.getOppositeDirection().toString());
+            uTurnCount++;
+        }
+        // stop after testing all movements
+        else {
+            
+            drone.stopDrone();
+        }
+        JSONObject decision = drone.getDecision();
+        return decision.toString();
+    } */
 
     @Override
     public void acknowledgeResults(String s) {
         JSONObject response = new JSONObject(new JSONTokener(new StringReader(s)));
-        logger.info("** Response received:\n"+response.toString(2));
-        Integer cost = response.getInt("cost");
-        logger.info("The cost of the action was {}", cost);
-        String status = response.getString("status");
-        logger.info("The status of the drone is {}", status);
-        JSONObject extraInfo = response.getJSONObject("extras");
-        logger.info("Additional information received: {}", extraInfo);
-
-        // stuff i have added
-        drone.consumeBattery(cost);
-        logger.info("The battery of the drone is {}", drone.getBatteryLevel());
-        // something to check radar status??
-
-        if (extraInfo.length() == 2){ // when extraInfo has 2 elements, it from the radar method 
-            radarManager.setJSON(extraInfo);
-            logger.info("Radar Status: " + radarManager.getStatus(numOfEchos));
-            numOfEchos++;
-        }
+        resultManager.acknowledge(response);
     }
 
     @Override

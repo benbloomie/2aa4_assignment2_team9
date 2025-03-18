@@ -28,7 +28,5 @@ public class Creek {
 
     public double getY() {
         return y;
-    }
-
-    
+    }    
 }

@@ -19,7 +19,7 @@ public class CommandCenter {
         return commands.poll();  // returns and removes the command from the queue to compute the action
     }
 
-    public boolean isDroneInMotion() {
+    public boolean isDroneInAction() {
         return !commands.isEmpty();  // checks if the queue is empty to determine if the drone is in a U-Turn
     }
 }

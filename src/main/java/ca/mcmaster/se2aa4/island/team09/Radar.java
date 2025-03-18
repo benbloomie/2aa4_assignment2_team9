@@ -4,10 +4,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 public class Radar {
-
     private final Logger logger = LogManager.getLogger();
+    private GPS gps;
 
-    public Radar() {
+    public Radar(GPS gps) {
+        this.gps = gps;
     }
 
     public boolean isBoundaryAhead(Direction direction) {
@@ -22,17 +23,17 @@ public class Radar {
         commandCenter.addCommand(decision);
     }
 
-    public void noseEcho(GPS gps, CommandCenter commandCenter){ // find the echo value from the nose, and send it to the command center
+    public void noseEcho(CommandCenter commandCenter){ // find the echo value from the nose, and send it to the command center
         Direction noseDirection = gps.getDirection();
         getEcho(noseDirection, commandCenter);
     }
 
-    public void leftEcho(GPS gps, CommandCenter commandCenter){ // find the echo value from the left radar and send it to the command center
+    public void leftEcho(CommandCenter commandCenter){ // find the echo value from the left radar and send it to the command center
         Direction leftWingDirection = gps.getLeftDirection();
         getEcho(leftWingDirection, commandCenter);
     }
 
-    public void rightEcho(GPS gps, CommandCenter commandCenter){ // find the echo value from the right radar and send it to the command center
+    public void rightEcho(CommandCenter commandCenter){ // find the echo value from the right radar and send it to the command center
         Direction rightWingDirection = gps.getRightDirection();
         getEcho(rightWingDirection, commandCenter);
     }
