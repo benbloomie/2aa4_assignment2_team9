@@ -3,9 +3,11 @@ package ca.mcmaster.se2aa4.island.team09;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
-public class Radar {
+public class Radar{
     private final Logger logger = LogManager.getLogger();
     private GPS gps;
+    private Scan scan;
+    private Action action;
 
     public Radar(GPS gps) {
         this.gps = gps;
@@ -16,30 +18,21 @@ public class Radar {
         return false;  // placeholder
     }
 
-    private void getEcho(Direction echoDirection, CommandCenter commandCenter) { // find the echo value and send it to the command center
-        // creates a JSONObject to store the parameter information
-        JSONObject parameters = new JSONObject();
-        parameters.put("direction", echoDirection);
-
-        // creates a JSONObject to register the action and its corresponding parameters
-        JSONObject decision = new JSONObject();
-        decision.put("action", "echo");
-        decision.put("parameters", parameters);
-        commandCenter.addCommand(decision);  // adds action to commands queue
-    }
-
-    public void noseEcho(CommandCenter commandCenter){ // find the echo value from the nose, and send it to the command center
+    public void noseEcho(CommandCenter commands){ // find the echo value from the nose, and send it to the command center
         Direction noseDirection = gps.getDirection();
-        getEcho(noseDirection, commandCenter);
+        action = new Scan(noseDirection, commands);
+        action.performAction();
     }
 
-    public void leftEcho(CommandCenter commandCenter){ // find the echo value from the left radar and send it to the command center
+    public void leftEcho(CommandCenter commands){ // find the echo value from the nose, and send it to the command center
         Direction leftWingDirection = gps.getLeftDirection();
-        getEcho(leftWingDirection, commandCenter);
+        action = new Scan(leftWingDirection, commands);
+        action.performAction();
     }
 
-    public void rightEcho(CommandCenter commandCenter){ // find the echo value from the right radar and send it to the command center
+    public void rightEcho(CommandCenter commands){ // find the echo value from the nose, and send it to the command center
         Direction rightWingDirection = gps.getRightDirection();
-        getEcho(rightWingDirection, commandCenter);
+        action = new Scan(rightWingDirection, commands);
+        action.performAction();
     }
 }

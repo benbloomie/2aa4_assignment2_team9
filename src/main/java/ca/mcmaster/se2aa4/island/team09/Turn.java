@@ -2,7 +2,7 @@ package ca.mcmaster.se2aa4.island.team09;
 
 import org.json.JSONObject;
 
-public class Turn implements PropellerAction {
+public class Turn implements Action {
     private final CommandCenter commands;
     private Direction turnDirection;
     private GPS gps;

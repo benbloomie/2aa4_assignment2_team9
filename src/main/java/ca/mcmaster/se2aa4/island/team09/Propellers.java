@@ -2,7 +2,7 @@ package ca.mcmaster.se2aa4.island.team09;
 
 // propellers class controls which action is called
 public class Propellers {
-    private PropellerAction action;
+    private Action action;
 
     // calls the corresponding realization to perform the action
     public void turnDrone(String turnDirection, GPS gps, CommandCenter commands) {

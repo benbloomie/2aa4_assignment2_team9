@@ -2,7 +2,7 @@ package ca.mcmaster.se2aa4.island.team09;
 
 import org.json.JSONObject;
 
-public class Stop implements PropellerAction {
+public class Stop implements Action {
     private final CommandCenter commands;
 
     public Stop(CommandCenter commands) {

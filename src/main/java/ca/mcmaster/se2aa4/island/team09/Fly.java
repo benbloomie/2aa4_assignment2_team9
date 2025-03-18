@@ -2,7 +2,7 @@ package ca.mcmaster.se2aa4.island.team09;
 
 import org.json.JSONObject;
 
-public class Fly implements PropellerAction {
+public class Fly implements Action {
     private final CommandCenter commands;
 
     public Fly(CommandCenter commands) {
