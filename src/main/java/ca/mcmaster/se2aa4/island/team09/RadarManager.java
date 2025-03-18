@@ -16,11 +16,11 @@ public class RadarManager {
         found = EchoStatus.valueOf(foundString);
     }
 
-    public int getRangeStatus(int index) { //return the range
+    public int getRangeStatus() { //return the range
         return range;
     }
 
-    public EchoStatus getEchoStatus(int index) { //return the most recent echoStatus
+    public EchoStatus getEchoStatus() { //return the most recent echoStatus
         return found;
     }
     
