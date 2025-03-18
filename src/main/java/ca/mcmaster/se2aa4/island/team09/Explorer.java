@@ -20,11 +20,6 @@ public class Explorer implements IExplorerRaid {
     private int xStart = 0;
     private int yStart = 0;
 
-    // TEMPORARY TESTING VARIABLES
-    private int moveForward = 0;
-    private int turnCount = 0;
-    private int uTurnCount = 0;
-
     @Override
     public void initialize(String s) {
         logger.info("** Initializing the Exploration Command Center");
