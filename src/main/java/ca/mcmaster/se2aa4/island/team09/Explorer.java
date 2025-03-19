@@ -12,6 +12,7 @@ import eu.ace_design.island.bot.IExplorerRaid;
 public class Explorer implements IExplorerRaid {
 
     private final Logger logger = LogManager.getLogger();
+    private CommandCenter commandCenter;
     private CreekStorage creekStorage;
     private DroneState drone;
     private ResponseCenter resultManager;
@@ -31,6 +32,7 @@ public class Explorer implements IExplorerRaid {
         Integer batteryCapacity = info.getInt("budget");
         
         this.drone = new DroneState(startingDirection, new Battery(batteryCapacity), new Coordinate(xStart, yStart));
+        this.commandCenter = new CommandCenter();
         this.resultManager = new ResponseCenter(drone);
         this.gps = drone.getGPS();
 
@@ -44,25 +46,25 @@ public class Explorer implements IExplorerRaid {
     public String takeDecision() {
         ActionType prevAction = resultManager.getPreviousAction();
 
-        if (drone.isInAction()) {
-            JSONObject decision = drone.getDecision();
+        if (commandCenter.isDroneInAction()) {
+            JSONObject decision = commandCenter.getNextCommand();
             logger.info("Drone in action: {}", decision.toString());
             return decision.toString();
         }
 
         else if (prevAction == ActionType.MOVEMENT) {
-            drone.frontEcho();
+            drone.frontEcho(commandCenter);
         }
 
         else {
             if (resultManager.uTurnRequired()) {  // if a U-Turn is needed, perform it
-                drone.turnDrone(gps.getOppositeDirection().toString());
+                drone.turnDrone(gps.getOppositeDirection(), commandCenter);
             }
             else {  // otherwise, continue straight
-                drone.moveForward();
+                drone.moveForward(commandCenter);
             }
         }
-        JSONObject decision = drone.getDecision();
+        JSONObject decision = commandCenter.getNextCommand();
         logger.info("Executing action: {}", decision.toString());
         return decision.toString();
     } 

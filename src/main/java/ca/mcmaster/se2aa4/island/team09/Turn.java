@@ -7,10 +7,10 @@ public class Turn implements Action {
     private Direction turnDirection;
     private GPS gps;
 
-    public Turn(GPS gps, CommandCenter commands, String turnDirection) {
+    public Turn(GPS gps, CommandCenter commands, Direction turnDirection) {
         this.gps = gps;
         this.commands = commands;
-        this.turnDirection = Direction.valueOf(turnDirection);
+        this.turnDirection = turnDirection;
     }
 
     @Override

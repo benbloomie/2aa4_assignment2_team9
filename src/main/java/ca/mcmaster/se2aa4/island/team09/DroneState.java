@@ -1,17 +1,13 @@
 package ca.mcmaster.se2aa4.island.team09;
 
-import org.json.JSONObject;
-
 public class DroneState {
     private GPS gps;
     private Propellers propellers;
     private Battery battery;
-    private CommandCenter commands;
     private Radar radar;
 
     public DroneState(String direction, Battery battery, Coordinate coordinates) {
         this.gps = new GPS(Direction.valueOf(direction), coordinates);
-        this.commands = new CommandCenter();
         this.propellers = new Propellers();
         this.battery = battery;
         this.radar = new Radar(gps);
@@ -25,7 +21,7 @@ public class DroneState {
         return gps;
     }
 
-    public void turnDrone(String newDirection) {
+    public void turnDrone(Direction newDirection, CommandCenter commands) {
         propellers.turnDrone(newDirection, gps, commands);
     }
 
@@ -41,23 +37,15 @@ public class DroneState {
         return battery.isBatteryEmpty();
     }
 
-    public void moveForward() {
+    public void moveForward(CommandCenter commands) {
         propellers.moveForward(commands);
     }
 
-    public void stopDrone() {
+    public void stopDrone(CommandCenter commands) {
         propellers.stopDrone(commands);
     }
-    
-    public JSONObject getDecision() {
-        return commands.getNextCommand();  // retrieves action from commands queue to perform the corresponding action
-    }
 
-    public boolean isInAction() {
-        return commands.isDroneInAction();
-    }
-
-    public void frontEcho() {
+    public void frontEcho(CommandCenter commands) {
         radar.noseEcho(commands);
     }
 }

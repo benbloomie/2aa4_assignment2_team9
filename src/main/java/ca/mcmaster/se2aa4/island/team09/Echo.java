@@ -2,11 +2,11 @@ package ca.mcmaster.se2aa4.island.team09;
 
 import org.json.JSONObject;
 
-public class Scan implements Action{
+public class Echo implements Action{
     private Direction echoDirection;
     private CommandCenter commands;
 
-    public Scan(Direction echoDirection, CommandCenter commandCenter){
+    public Echo(Direction echoDirection, CommandCenter commandCenter){
         this.echoDirection = echoDirection;
         this.commands = commandCenter;
     }

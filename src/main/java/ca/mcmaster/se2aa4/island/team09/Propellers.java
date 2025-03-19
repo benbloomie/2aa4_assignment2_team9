@@ -5,7 +5,7 @@ public class Propellers {
     private Action action;
 
     // calls the corresponding realization to perform the action
-    public void turnDrone(String turnDirection, GPS gps, CommandCenter commands) {
+    public void turnDrone(Direction turnDirection, GPS gps, CommandCenter commands) {
         action = new Turn(gps, commands, turnDirection);
         action.performAction(); 
     } 
