@@ -38,7 +38,7 @@ public class DroneState {
     }
 
     public void moveForward(CommandCenter commands) {
-        propellers.moveForward(commands);
+        propellers.moveForward(gps, commands);
     }
 
     public void stopDrone(CommandCenter commands) {
@@ -47,5 +47,9 @@ public class DroneState {
 
     public void frontEcho(CommandCenter commands) {
         radar.noseEcho(commands);
+    }
+
+    public void rightEcho(CommandCenter commads) {
+        radar.rightEcho(commads);
     }
 }

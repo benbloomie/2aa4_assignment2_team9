@@ -15,7 +15,7 @@ public class Turn implements Action {
 
     @Override
     public void performAction() {
-        if (!canDroneMakeTurn()) {
+        if (!canDroneMakeTurn()) {  // checks if the drone can directly make the turn before processing 
             makeUTurn();
             return;
         }

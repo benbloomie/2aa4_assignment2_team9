@@ -1,20 +1,24 @@
 package ca.mcmaster.se2aa4.island.team09;
 
-public class Coordinate {
-    private double xCoordinate;
-    private double yCoordinate;
-    private int[][] positionAdjustments = {{0,1}, {1,0}, {0, -1}, {-1, 0}};  // array to store the corresponding adjustmnets
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-    public Coordinate(double x, double y) {
+public class Coordinate {
+    private final Logger logger = LogManager.getLogger();
+    private int xCoordinate;
+    private int yCoordinate;
+    private int[][] positionAdjustments = {{0,-1}, {1,0}, {0, 1}, {-1, 0}};  // array to store the corresponding adjustmnets
+
+    public Coordinate(int x, int y) {
         this.xCoordinate = x;
         this.yCoordinate = y;
     }
 
-    public double getXCoordinate() {
+    public int getXCoordinate() {
         return this.xCoordinate;
     }
 
-    public double getYCoordinate() {
+    public int getYCoordinate() {
         return this.yCoordinate;
     }
 
@@ -26,5 +30,6 @@ public class Coordinate {
         // increments the position using the adjustment factor from the array
         int yAdjust = positionAdjustments[directionValue][1];
         this.yCoordinate = yCoordinate + yAdjust;
+        logger.info("Updated coordinates: [{}, {}]", xCoordinate, yCoordinate);
     }
 }

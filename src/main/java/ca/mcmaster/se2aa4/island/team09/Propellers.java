@@ -10,8 +10,8 @@ public class Propellers {
         action.performAction(); 
     } 
 
-    public void moveForward(CommandCenter commands) {
-        action = new Fly(commands);
+    public void moveForward(GPS gps, CommandCenter commands) {
+        action = new Fly(gps, commands);
         action.performAction();
     }
 

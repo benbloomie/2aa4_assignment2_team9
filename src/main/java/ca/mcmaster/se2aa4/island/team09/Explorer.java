@@ -6,6 +6,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import eu.ace_design.island.bot.IExplorerRaid;
 
@@ -16,16 +18,16 @@ public class Explorer implements IExplorerRaid {
     private CreekStorage creekStorage;
     private DroneState drone;
     private ResponseCenter resultManager;
-    private GPS gps;  // explorer should also have access to the gps of the drone to determine how it should move 
+    private Island island;
+    private Queue<SearchPhase> searchPhases;
 
-    private int xStart = 0;
-    private int yStart = 0;
+    private int xStart = 1;
+    private int yStart = 1;
 
     @Override
     public void initialize(String s) {
         logger.info("** Initializing the Exploration Command Center");
         JSONObject info = new JSONObject(new JSONTokener(new StringReader(s)));
-        this.creekStorage = new CreekStorage();
         logger.info("** Initialization info:\n {}",info.toString(2));
 
         String startingDirection = info.getString("heading").toUpperCase();
@@ -33,15 +35,40 @@ public class Explorer implements IExplorerRaid {
         
         this.drone = new DroneState(startingDirection, new Battery(batteryCapacity), new Coordinate(xStart, yStart));
         this.commandCenter = new CommandCenter();
-        this.resultManager = new ResponseCenter(drone);
-        this.gps = drone.getGPS();
+        this.creekStorage = new CreekStorage();
+        this.island = new Island();
+        this.resultManager = new ResponseCenter(drone, island);
 
         logger.info("The drone is facing {}", drone.getDirection());
         logger.info("Battery level is {}", drone.getBatteryLevel());
+
+        // TESTING 
+        this.searchPhases = new LinkedList<>();
+        searchPhases.add(new IslandGenerator(drone, commandCenter, resultManager, island));
+        searchPhases.add(new IslandLocater(drone, commandCenter, resultManager, island));
     }
 
-    // FLIES UNTIL BATTERY DIES --> SOMETIMES GOES OUT OF BOUNDS????
-        // Don't think this will be a worry once the rest of the logic is done since the drone flies back
+    @Override
+    public String takeDecision() {
+        if (commandCenter.isDroneInAction()) {
+            JSONObject decision = commandCenter.getNextCommand();
+            logger.info("Drone in action: {}", decision.toString());
+            return decision.toString();
+        }
+        
+        if (searchPhases.peek().isActionComplete()) {
+            logger.info("Phase {} has been completed!", searchPhases.peek());
+            searchPhases.remove();
+        }
+
+        searchPhases.peek().executeStep();
+        JSONObject decision = commandCenter.getNextCommand();
+        logger.info("Executing action: {}", decision.toString());
+        return decision.toString();
+    } 
+
+    /*   FLIES UNTIL BATTERY DIES --> SOMETIMES GOES OUT OF BOUNDS????
+        //should be able to use this for IslandPatrol phase
     @Override
     public String takeDecision() {
         ActionType prevAction = resultManager.getPreviousAction();
@@ -67,7 +94,7 @@ public class Explorer implements IExplorerRaid {
         JSONObject decision = commandCenter.getNextCommand();
         logger.info("Executing action: {}", decision.toString());
         return decision.toString();
-    } 
+    } */
 
     @Override
     public void acknowledgeResults(String s) {

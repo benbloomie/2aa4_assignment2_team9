@@ -1,6 +1,10 @@
 package ca.mcmaster.se2aa4.island.team09;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Battery {
+    private final Logger logger = LogManager.getLogger();
     private int battery;
     
     public Battery(int battery) {
@@ -19,6 +23,7 @@ public class Battery {
         else {
             battery = 0;  // if it does exceed its current charge, set it to zero to prevent a negative battery
         }
+        logger.info("The battery of the drone after the action is: {}", getBattery());
     }
 
     public int getBattery() {

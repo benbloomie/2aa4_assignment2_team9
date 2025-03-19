@@ -2,11 +2,11 @@ package ca.mcmaster.se2aa4.island.team09;
 
 import org.json.JSONObject;
 
-public class RadarManager {
+public class RadarStatus {
     private int range;
     private EchoStatus found;
 
-    public RadarManager() {
+    public RadarStatus() {
         this.found = EchoStatus.OUT_OF_RANGE;
     }
     
@@ -16,11 +16,11 @@ public class RadarManager {
         found = EchoStatus.valueOf(foundString);
     }
 
-    public int getRangeStatus() { //return the range
+    public int getRange() { //return the range
         return range;
     }
 
-    public EchoStatus getEchoStatus() { //return the most recent echoStatus
+    public EchoStatus getEcho() { //return the most recent echoStatus
         return found;
     }
     
