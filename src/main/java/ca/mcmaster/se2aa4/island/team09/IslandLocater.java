@@ -24,9 +24,10 @@ public class IslandLocater extends SearchPhase {
         // moves drone forward until it reaches GROUND 
         else {
             int movesToIsland = responseCenter.getRadarStatus().getRange();
-            for (int i = 0; i <= movesToIsland; i++) {
+            for (int i = 0; i < movesToIsland; i++) {
                 drone.moveForward(commandCenter);
             }
+            drone.turnDrone(Direction.E, commandCenter);
             phaseCompleted = true;
         }
     }
