@@ -3,31 +3,27 @@ package ca.mcmaster.se2aa4.island.team09;
 import java.util.List;
 
 public class ScanResult {
-    private final int cost;
-    private final List<String> biomes;
-    private final List<String> creeks;
-    private final List<String> sites;
+    private List<String> creeks;
+    private String site;
 
-    public ScanResult(int cost, List<String> biomes, List<String> creeks, List<String> sites) {
-        this.cost = cost;
-        this.biomes = biomes;
+    public ScanResult(List<String> creeks, String site) {
         this.creeks = creeks;
-        this.sites = sites;
-    }
-
-    public int getCost() {
-        return cost;
-    }
-
-    public List<String> getBiomes() {
-        return biomes;
+        this.site = site;
     }
 
     public List<String> getCreeks() {
         return creeks;
     }
 
-    public List<String> getSites() {
-        return sites;
+    public String getSite() {
+        return site;
+    }
+
+    public boolean hasCreeks() {
+        return creeks != null && !creeks.isEmpty();
+    }
+
+    public boolean hasSite() {
+        return site != null;
     }
 }

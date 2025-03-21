@@ -4,27 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ScanManager {
-    private final List<ScanResult> scanHistory;
+    private List<ScanResult> scans = new ArrayList<>();
 
-    public ScanManager() {
-        this.scanHistory = new ArrayList<>();
+    public void addScan(ScanResult result) {
+        scans.add(result);
     }
 
-    public void storeScanResult(ScanResult result) {
-        scanHistory.add(result);
-    }
-
-    public ScanResult getScanAtIndex(int index) {
-        if (index < scanHistory.size()) {
-            return scanHistory.get(index);
-        } 
-
-        else {
-            return null;
+    public List<String> getAllCreekIds() {
+        List<String> ids = new ArrayList<>();
+        for (ScanResult scan : scans) {
+            if (scan.hasCreeks()) {
+                ids.addAll(scan.getCreeks());
+            }
         }
+        return ids;
     }
 
-    public int getTotalScans() {
-        return scanHistory.size();
+    public String getEmergencySiteId() {
+        for (ScanResult scan : scans) {
+            if (scan.hasSite()) {
+                return scan.getSite();
+            }
+        }
+        return null;
     }
 }
