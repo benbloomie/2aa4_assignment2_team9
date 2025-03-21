@@ -6,49 +6,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PhotoScanner {
-    private final CommandCenter commandCenter;
-    private ScanResult lastScanResult;
-    private ScanManager scanManager;
 
-    public PhotoScanner(CommandCenter commandCenter) {
-        this.commandCenter = commandCenter;
-        this.lastScanResult = null;
-        this.scanManager = new ScanManager();
-    }
-
-    public void scanArea() {
-        JSONObject scanCommand = new JSONObject();
-        scanCommand.put("action", "scan");
-        commandCenter.addCommand(scanCommand);
-    }
-
-    public ScanResult processScanResponse(JSONObject response, DroneState drone) {
-        int cost = response.getInt("cost");
-        JSONObject extras = response.getJSONObject("extras");
-
-        List<String> biomes = jsonArrayToList(extras.getJSONArray("biomes"));
-        List<String> creeks = jsonArrayToList(extras.getJSONArray("creeks"));
-        List<String> sites = jsonArrayToList(extras.getJSONArray("sites"));
-
-        lastScanResult = new ScanResult(cost, biomes, creeks, sites);
-        scanManager.storeScanResult(lastScanResult);
-        drone.consumeBattery(cost);
-        return lastScanResult;
-    }
-
-    public ScanResult getLastScanResult() {
-        return lastScanResult;
-    }
-
-    public ScanManager getScanManager() {
-        return scanManager;
-    }
-
-    private List<String> jsonArrayToList(JSONArray jsonArray) {
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < jsonArray.length(); i++) {
-            list.add(jsonArray.getString(i));
+    public ScanResult scan(String scannerResponse) {
+        JSONObject scannerJson = new JSONObject(scannerResponse);
+        
+        
+        JSONObject extras = scannerJson.optJSONObject("extras");
+        if (extras == null) {
+            extras = new JSONObject();
         }
-        return list;
+
+        List<String> creeks = new ArrayList<>();
+        if (extras.has("creeks")) {
+            JSONArray creeksArray = extras.getJSONArray("creeks");
+            for (int i = 0; i < creeksArray.length(); i++) {
+                creeks.add(creeksArray.getString(i));
+            }
+        }
+
+        String site = null;
+        if (extras.has("sites")) {
+            JSONArray sitesArray = extras.getJSONArray("sites");
+            if (sitesArray.length() > 0) {
+                site = sitesArray.getString(0);
+            }
+        }
+
+        return new ScanResult(creeks, site);
     }
 }
