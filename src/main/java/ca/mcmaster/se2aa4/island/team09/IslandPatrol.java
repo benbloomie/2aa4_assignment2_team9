@@ -4,7 +4,7 @@ public class IslandPatrol extends SearchPhase{
     private int stepCounter;
     private int moveCounter; //progress towards completion of a segment of the algorithm
     private int segmentLength = 1;
-    private Direction[] directions = {Direction.E, Direction.N, Direction.W, Direction.S}
+    private Direction[] directions = {Direction.E, Direction.N, Direction.W, Direction.S};
 
     public IslandPatrol(DroneState drone, CommandCenter commandCenter, ResponseCenter responseCenter, Island island){
         super(drone, commandCenter, responseCenter, island);

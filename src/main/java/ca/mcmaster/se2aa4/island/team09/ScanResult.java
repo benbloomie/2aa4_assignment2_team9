@@ -3,15 +3,15 @@ package ca.mcmaster.se2aa4.island.team09;
 import java.util.List;
 
 public class ScanResult {
-    private List<String> creeks;
+    private List<Creek> creeks;
     private String site;
 
-    public ScanResult(List<String> creeks, String site) {
+    public ScanResult(List<Creek> creeks, String site) {
         this.creeks = creeks;
         this.site = site;
     }
 
-    public List<String> getCreeks() {
+    public List<Creek> getCreeks() {
         return creeks;
     }
 

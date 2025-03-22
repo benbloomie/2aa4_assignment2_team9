@@ -10,8 +10,8 @@ public class ScanManager {
         scans.add(result);
     }
 
-    public List<String> getAllCreekIds() {
-        List<String> ids = new ArrayList<>();
+    public List<Creek> getAllCreekIds() {
+        List<Creek> ids = new ArrayList<>();
         for (ScanResult scan : scans) {
             if (scan.hasCreeks()) {
                 ids.addAll(scan.getCreeks());

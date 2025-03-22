@@ -16,11 +16,14 @@ public class PhotoScanner {
             extras = new JSONObject();
         }
 
-        List<String> creeks = new ArrayList<>();
+        List<Creek> creeks = new ArrayList<>();
+        
         if (extras.has("creeks")) {
             JSONArray creeksArray = extras.getJSONArray("creeks");
             for (int i = 0; i < creeksArray.length(); i++) {
-                creeks.add(creeksArray.getString(i));
+                String creekString = creeksArray.getString(i);
+                Creek creek = new Creek(creekString); // Assuming such a constructor exists
+                creeks.add(creek);
             }
         }
 

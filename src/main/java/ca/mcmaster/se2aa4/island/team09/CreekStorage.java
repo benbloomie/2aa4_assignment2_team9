@@ -1,17 +1,19 @@
 package ca.mcmaster.se2aa4.island.team09;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CreekStorage {
 
-    private Set<Creek> creeks = new HashSet<>();
+    private List<Creek> creeks = new ArrayList<>();
 
     public void addCreek(Creek creek) {
-        creeks.add(creek);  // Prevents duplicates based on equals/hashCode
+        if (!creeks.contains(creek)) {
+            creeks.add(creek);
+        }
     }
 
-    public Set<Creek> getAllCreeks() {
+    public List<Creek> getAllCreeks() {
         return creeks;
     }
 
@@ -19,6 +21,7 @@ public class CreekStorage {
         return creeks.isEmpty();
     }
 
+    /* 
     public Creek findNearestCreek(double startingX, double startingY) {
         double minDistance = Double.MAX_VALUE;
         Creek nearestCreek = null;
@@ -32,4 +35,5 @@ public class CreekStorage {
         }
         return nearestCreek;
     }
+        */
 }
