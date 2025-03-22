@@ -19,6 +19,8 @@ public class Explorer implements IExplorerRaid {
     private CreekStorage creekStorage;
     private DroneState drone;
     private ResponseCenter resultManager;
+    private PhotoScanner photoScanner;
+    private ScanManager scanManager;
     private Island island;
     private Queue<SearchPhase> searchPhases;
     // ADDED VARIABLES
@@ -40,10 +42,12 @@ public class Explorer implements IExplorerRaid {
         this.commandCenter = new CommandCenter();
         this.creekStorage = new CreekStorage();
         this.island = new Island();
-        this.resultManager = new ResponseCenter(drone, island);
+        this.photoScanner = new PhotoScanner();
+        this.scanManager = new ScanManager();
+
+        this.resultManager = new ResponseCenter(drone, island, photoScanner, scanManager, creekStorage);
 
         // ADDED INITIALIZATIONS
-
 
         logger.info("The drone is facing {}", drone.getDirection());
         logger.info("Battery level is {}", drone.getBatteryLevel());
