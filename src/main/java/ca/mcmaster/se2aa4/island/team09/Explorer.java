@@ -17,7 +17,6 @@ public class Explorer implements IExplorerRaid {
     private CommandCenter commandCenter;
     private Drone drone;
     private ResponseCenter resultManager;
-    private Island island;
     private Queue<SearchPhase> searchPhases;
     // ADDED VARIABLES
     private int xStart = 1;
@@ -34,7 +33,7 @@ public class Explorer implements IExplorerRaid {
 
         this.drone = new Drone(startingDirection, new Battery(batteryCapacity), new Coordinate(xStart, yStart));
         this.commandCenter = new CommandCenter();
-        this.island = new Island();
+        Island island = new Island();
 
         this.resultManager = new ResponseCenter(drone, island, drone.getGPS());
 
@@ -79,7 +78,7 @@ public class Explorer implements IExplorerRaid {
     @Override
     public String deliverFinalReport() {
         logger.info("Delivering final report");
-        logger.info("Emergency Site ID: " + resultManager.getEmergencySite());
+        logger.info("Emergency Site ID: " + resultManager.getEmergencySite().getId());
         logger.info("Creek IDs Found: " + resultManager.getCreekIds());
         logger.info("The closest creek: " + resultManager.getNearestCreek());
         return "Emergency Site ID: " + resultManager.getEmergencySite() + "\nCreek IDs Found: "

@@ -96,12 +96,13 @@ public class ResponseCenter {
         return locationStorage.getCreekResults();
     }
 
-    public String getEmergencySite() {
-        return locationStorage.getEmergencySiteId();
+    public EmergencySite getEmergencySite() {
+        return locationStorage.getEmergencySite();
     }
 
     public String getNearestCreek() {
-        Creek nearestCreek = locationStorage.findNearestCreek(gps.getXCord(), gps.getYCord());
+        EmergencySite emergencySite = locationStorage.getEmergencySite();
+        Creek nearestCreek = locationStorage.findNearestCreek(emergencySite.getX(), emergencySite.getY());
         return nearestCreek != null ? nearestCreek.getId() : "No creeks found";
     }
 }

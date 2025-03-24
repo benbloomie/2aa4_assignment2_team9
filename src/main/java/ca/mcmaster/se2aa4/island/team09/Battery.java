@@ -29,8 +29,4 @@ public class Battery {
     public int getBattery() {
         return battery;
     }
-
-    public boolean isBatteryEmpty() {
-        return battery <= 0;
-    }
 }

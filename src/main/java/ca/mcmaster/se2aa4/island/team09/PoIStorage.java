@@ -43,8 +43,8 @@ public class PoIStorage {
         this.emergencySite = emergencySite;
     }
 
-    public String getEmergencySiteId() {
-        return emergencySite.getId();
+    public EmergencySite getEmergencySite() {
+        return emergencySite;
     }
 
     public Creek findNearestCreek(double startingX, double startingY) {
