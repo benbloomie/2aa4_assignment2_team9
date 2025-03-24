@@ -44,19 +44,17 @@ public class PoIStorage {
         return emergencySite.getId();
     }
 
-    /*
-     * public Creek findNearestCreek(double startingX, double startingY) {
-     * double minDistance = Double.MAX_VALUE;
-     * Creek nearestCreek = null;
-     * 
-     * for (Creek creek : creeks) {
-     * double distanceToCreek = creek.getDistanceTo(startingX, startingY);
-     * if (distanceToCreek < minDistance) {
-     * minDistance = distanceToCreek;
-     * nearestCreek = creek;
-     * }
-     * }
-     * return nearestCreek;
-     * }
-     */
+    public Creek findNearestCreek(double startingX, double startingY) {
+        double minDistance = Double.MAX_VALUE;
+        Creek nearestCreek = null;
+
+        for (Creek creek : creeks) {
+            double distanceToCreek = creek.getDistanceTo(startingX, startingY);
+            if (distanceToCreek < minDistance) {
+                minDistance = distanceToCreek;
+                nearestCreek = creek;
+            }
+        }
+        return nearestCreek;
+    }
 }

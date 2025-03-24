@@ -35,10 +35,6 @@ public class Drone {
         battery.consumeBattery(batteryUsed);
     }
 
-    public boolean isDroneDead() {
-        return battery.isBatteryEmpty();
-    }
-
     public void moveForward(CommandCenter commands) {
         propellers.moveForward(gps, commands);
     }

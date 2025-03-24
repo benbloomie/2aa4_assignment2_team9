@@ -46,7 +46,7 @@ public class ResponseCenter {
         JSONObject extraInfo = response.getJSONObject("extras");
         if (!extraInfo.isEmpty()) { // if extra information is present, process it
             analyzeExtras(extraInfo);
-        } 
+        }
     }
 
     private void analyzeExtras(JSONObject extraInfo) {
@@ -71,7 +71,7 @@ public class ResponseCenter {
     }
 
     public void handleScanResult(JSONObject extras) {
-        JSONArray creeksInfo = extras.getJSONArray("creeks");  // retrieves the associated id with the creek
+        JSONArray creeksInfo = extras.getJSONArray("creeks"); // retrieves the associated id with the creek
         int xPos = gps.getXCord();
         int yPos = gps.getYCord();
 
@@ -81,9 +81,9 @@ public class ResponseCenter {
             locationStorage.addCreek(new Creek(creekId, xPos, yPos));
         }
 
-        JSONArray siteInfo = extras.getJSONArray("sites");  // retrieves the associated id with the emergecny site
-        if (siteInfo.length() > 0) {  // if true, scan found a site  --> update emergecny site id
-            String emergencySiteId = siteInfo.getString(0); 
+        JSONArray siteInfo = extras.getJSONArray("sites"); // retrieves the associated id with the emergecny site
+        if (siteInfo.length() > 0) { // if true, scan found a site --> update emergecny site id
+            String emergencySiteId = siteInfo.getString(0);
             locationStorage.setEmergencySite(new EmergencySite(emergencySiteId, xPos, yPos));
         }
     }
@@ -98,5 +98,10 @@ public class ResponseCenter {
 
     public String getEmergencySite() {
         return locationStorage.getEmergencySiteId();
+    }
+
+    public String getNearestCreek() {
+        Creek nearestCreek = locationStorage.findNearestCreek(gps.getXCord(), gps.getYCord());
+        return nearestCreek != null ? nearestCreek.getId() : "No creeks found";
     }
 }

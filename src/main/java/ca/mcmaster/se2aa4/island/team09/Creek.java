@@ -12,14 +12,14 @@ public class Creek {
         this.y = y;
     }
     
-    /* 
+     
     public double getDistanceTo(double startingX, double startingY) {
         // calculates the distance to each creek using x and y positions --> cannot fly on a diagonal
         double xDistance = this.x - startingX;
         double yDistance = this.y - startingY;
         return xDistance + yDistance;
     } 
-    */
+    
 
     public String getId() {
         return Id;
