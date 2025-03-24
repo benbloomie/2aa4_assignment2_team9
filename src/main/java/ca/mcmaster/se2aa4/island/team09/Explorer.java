@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 import eu.ace_design.island.bot.IExplorerRaid;
@@ -16,16 +15,11 @@ public class Explorer implements IExplorerRaid {
 
     private final Logger logger = LogManager.getLogger();
     private CommandCenter commandCenter;
-    private CreekStorage creekStorage;
     private DroneState drone;
     private ResponseCenter resultManager;
-    private PhotoScanner photoScanner;
-    private ScanManager scanManager;
     private Island island;
     private Queue<SearchPhase> searchPhases;
     // ADDED VARIABLES
-    private String emergencySiteId = null;
-    List<Creek> creeks = new LinkedList<>();
     private int xStart = 1;
     private int yStart = 1;
 
@@ -40,12 +34,9 @@ public class Explorer implements IExplorerRaid {
 
         this.drone = new DroneState(startingDirection, new Battery(batteryCapacity), new Coordinate(xStart, yStart));
         this.commandCenter = new CommandCenter();
-        this.creekStorage = new CreekStorage();
         this.island = new Island();
-        this.photoScanner = new PhotoScanner();
-        this.scanManager = new ScanManager();
 
-        this.resultManager = new ResponseCenter(drone, island, photoScanner, scanManager, creekStorage);
+        this.resultManager = new ResponseCenter(drone, island, drone.getGPS());
 
         // ADDED INITIALIZATIONS
 
@@ -119,6 +110,6 @@ public class Explorer implements IExplorerRaid {
     // Tentative
     @Override
     public String deliverFinalReport() {
-        return "Emergency Site ID: " + emergencySiteId + "\nCreek IDs Found: " + creekStorage.getAllCreeks();
+        return "Emergency Site ID: " + resultManager.getEmergencySite() + "\nCreek IDs Found: " + resultManager.getCreekIds();
     }
 }

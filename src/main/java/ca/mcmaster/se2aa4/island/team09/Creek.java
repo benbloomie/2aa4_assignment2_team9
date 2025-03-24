@@ -2,14 +2,14 @@ package ca.mcmaster.se2aa4.island.team09;
 
 public class Creek {
     private String Id;
-    // private double x;
-    // private double y;
+    private int x;
+    private int y;
 
     // public Creek(String Id, double x, double y)
-    public Creek(String Id) {
+    public Creek(String Id, int x, int y) {
         this.Id = Id;
-        // this.x = x;
-        // this.y = y;
+        this.x = x;
+        this.y = y;
     }
     
     /* 
@@ -25,7 +25,6 @@ public class Creek {
         return Id;
     }
 
-    /*
     public double getX() {
         return x;
     }
@@ -33,5 +32,4 @@ public class Creek {
     public double getY() {
         return y;
     }    
-    */
 }

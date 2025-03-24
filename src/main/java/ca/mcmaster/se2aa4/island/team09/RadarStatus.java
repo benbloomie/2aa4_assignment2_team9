@@ -23,5 +23,4 @@ public class RadarStatus {
     public EchoStatus getEcho() { //return the most recent echoStatus
         return found;
     }
-    
 }

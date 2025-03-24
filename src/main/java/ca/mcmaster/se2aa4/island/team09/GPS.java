@@ -40,4 +40,12 @@ public class GPS {
     public void updateCoordinates() {
         coordinates.adjustCoordinate(direction);
     }
+
+    public int getXCord() {
+        return coordinates.getXCoordinate();
+    }
+
+    public int getYCord() {
+        return coordinates.getYCoordinate();
+    }
 }

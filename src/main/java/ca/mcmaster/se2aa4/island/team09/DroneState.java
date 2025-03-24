@@ -5,12 +5,14 @@ public class DroneState {
     private Propellers propellers;
     private Battery battery;
     private Radar radar;
+    private PhotoScanner photoScanner;
 
     public DroneState(String direction, Battery battery, Coordinate coordinates) {
         this.gps = new GPS(Direction.valueOf(direction), coordinates);
         this.propellers = new Propellers();
         this.battery = battery;
         this.radar = new Radar(gps);
+        this.photoScanner = new PhotoScanner();
     }
 
     public Direction getDirection() {
@@ -49,7 +51,11 @@ public class DroneState {
         radar.noseEcho(commands);
     }
 
-    public void rightEcho(CommandCenter commads) {
-        radar.rightEcho(commads);
+    public void rightEcho(CommandCenter commands) {
+        radar.rightEcho(commands);
+    }
+
+    public void scan(CommandCenter commands) {
+        photoScanner.scanGround(commands);
     }
 }

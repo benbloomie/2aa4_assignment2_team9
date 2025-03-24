@@ -1,30 +1,26 @@
 package ca.mcmaster.se2aa4.island.team09;
 
-import java.io.StringReader;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
-import org.json.JSONTokener;
+import org.json.JSONArray;
 
 public class ResponseCenter {
     private final Logger logger = LogManager.getLogger();
+    private final GPS gps;
     private DroneState drone;
     private Island island;
-    private RadarStatus radarStatus;
-    private ScanManager scanManager;
-    private PhotoScanner photoScanner;
     private CreekStorage creekStorage;
+    private RadarStatus radarStatus;
     private String emergencySiteId;
     private ActionType actionProcessed;
 
-    public ResponseCenter(DroneState drone, Island island, PhotoScanner photoScanner, ScanManager scanManager, CreekStorage creekStorage) {
+    public ResponseCenter(DroneState drone, Island island, GPS gps) {
         this.drone = drone;
         this.island = island;
         this.radarStatus = new RadarStatus();
-        this.photoScanner = photoScanner;
-        this.scanManager = scanManager;
-        this.creekStorage = creekStorage;
+        this.creekStorage = new CreekStorage();
+        this.gps = gps;
     }
 
     public void acknowledge(JSONObject response) {
@@ -57,17 +53,6 @@ public class ResponseCenter {
         }
     }
 
-    /*
-     * // ADDED SCANNING LOGIC
-     * ScanResult result = photoScanner.scan(scannerResponse.toString());
-     * scanManager.addScan(result);
-     * creekStorage.addCreek(result.getCreeks());
-     * 
-     * if (result.hasSite()) {
-     * emergencySiteId = result.getSite();
-     * }
-     */
-
     private void analyzeExtras(JSONObject extraInfo) {
         logger.info("Additional information received: {}", extraInfo);
         if (extraInfo.has("range")) { // action was an ECHO
@@ -76,6 +61,7 @@ public class ResponseCenter {
             handleRadarStatus();
         } else { // action was a SCAN
             actionProcessed = ActionType.SCAN;
+            handleScanResult(extraInfo);
         }
     }
 
@@ -90,22 +76,22 @@ public class ResponseCenter {
         }
     }
 
-    public void handleScanResult(String s) {
-        JSONObject scannerResponse = new JSONObject(new JSONTokener(new StringReader(s)));
-        acknowledge(scannerResponse); // Process cost/status/extras
+    public void handleScanResult(JSONObject extras) {
+        JSONArray creeksInfo = extras.getJSONArray("creeks");  // retrieves the associated id with the creek
 
-        ScanResult result = photoScanner.scan(scannerResponse.toString());
-        scanManager.addScan(result);
-
-        for (Creek creek : result.getCreeks()) {
-            creekStorage.addCreek(creek);
+        // processes each id recognized by the scan
+        for (int i = 0; i < creeksInfo.length(); i++) {
+            String creekId = creeksInfo.getString(0);
+            int xPos = gps.getXCord();
+            int yPos = gps.getYCord();
+            creekStorage.addCreek(new Creek(creekId, xPos, yPos));
         }
 
-        if (result.hasSite()) {
-            emergencySiteId = result.getSite();
+        JSONArray siteInfo = extras.getJSONArray("sites");  // retrieves the associated id with the emergecny site
+        if (siteInfo.length() > 0) {  // if true, scan found a site  --> update emergecny site id
+            emergencySiteId = siteInfo.getString(0); 
         }
     }
-
 
     public ActionType getPreviousAction() {
         return actionProcessed;
@@ -113,8 +99,7 @@ public class ResponseCenter {
 
     public boolean uTurnRequired() {
         EchoStatus recentEcho = radarStatus.getEcho();
-        // if our next fly reads OUT_OF_RANGE (off map) indicate a U-Turn needs to be
-        // performed
+        // if our next fly reads OUT_OF_RANGE (off map) indicate a U-Turn needs to be performed
         if (recentEcho == EchoStatus.OUT_OF_RANGE) {
             return true;
         }
@@ -123,5 +108,13 @@ public class ResponseCenter {
 
     public RadarStatus getRadarStatus() {
         return radarStatus;
+    }
+
+    public String getCreekIds() {
+        return creekStorage.getCreekResults();
+    }
+
+    public String getEmergencySite() {
+        return emergencySiteId;
     }
 }
