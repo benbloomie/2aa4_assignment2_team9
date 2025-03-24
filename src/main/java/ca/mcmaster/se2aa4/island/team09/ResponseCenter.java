@@ -103,6 +103,10 @@ public class ResponseCenter {
     public String getNearestCreek() {
         EmergencySite emergencySite = locationStorage.getEmergencySite();
         Creek nearestCreek = locationStorage.findNearestCreek(emergencySite.getX(), emergencySite.getY());
-        return nearestCreek != null ? nearestCreek.getId() : "No creeks found";
+        if (nearestCreek != null) {
+            return nearestCreek.getId();
+        } else {
+            return "No creeks found";
+        }
     }
 }
