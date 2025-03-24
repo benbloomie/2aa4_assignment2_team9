@@ -9,10 +9,9 @@ public class IslandLocater extends SearchPhase {
     private int movesMadeToIsland;
     private int movesNeededToMiddle;
     private int movesNeededToIsland;
-    private int rangeToGround;
 
-    public IslandLocater(DroneState drone, CommandCenter commandCenter, ResponseCenter responseCenter, Island island) {
-        super(drone, commandCenter, responseCenter, island);
+    public IslandLocater(Drone drone, CommandCenter commandCenter, Island island) {
+        super(drone, commandCenter, island);
         // calculates moves needed to island based on starting position
         this.movesMadeToMiddle = 0;
         this.movesMadeToIsland = 0;

@@ -1,13 +1,13 @@
 package ca.mcmaster.se2aa4.island.team09;
 
-public class DroneState {
+public class Drone {
     private GPS gps;
     private Propellers propellers;
     private Battery battery;
     private Radar radar;
     private PhotoScanner photoScanner;
 
-    public DroneState(String direction, Battery battery, Coordinate coordinates) {
+    public Drone(String direction, Battery battery, Coordinate coordinates) {
         this.gps = new GPS(Direction.valueOf(direction), coordinates);
         this.propellers = new Propellers();
         this.battery = battery;

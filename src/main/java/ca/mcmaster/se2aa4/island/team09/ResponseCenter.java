@@ -8,13 +8,13 @@ import org.json.JSONArray;
 public class ResponseCenter {
     private final Logger logger = LogManager.getLogger();
     private final GPS gps;
-    private DroneState drone;
+    private Drone drone;
     private Island island;
     private PoIStorage locationStorage;
     private RadarStatus radarStatus;
     private ActionType actionProcessed;
 
-    public ResponseCenter(DroneState drone, Island island, GPS gps) {
+    public ResponseCenter(Drone drone, Island island, GPS gps) {
         this.drone = drone;
         this.island = island;
         this.radarStatus = new RadarStatus();
