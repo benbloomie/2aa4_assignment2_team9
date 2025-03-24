@@ -20,8 +20,6 @@ public class IslandLocater extends SearchPhase {
 
     @Override
     public void executeStep() {
-        drone.scan(commandCenter);
-
 
         if (!movesAreSet()) {
             setMovesNeeded();
@@ -71,8 +69,8 @@ public class IslandLocater extends SearchPhase {
 
     private void setMovesNeeded() {
         // sets the amount of moves the drone needs to make to get to the islands middle position
-        this.movesNeededToMiddle = Math.abs(drone.getGPS().getXCord() - (island.getX() / 2)) - 2;
-        this.movesNeededToIsland = Math.abs(drone.getGPS().getYCord() - (island.getY() / 2)) - 2;
+        this.movesNeededToMiddle = Math.abs(drone.getGPS().getXCord() - (island.getX() / 2));
+        this.movesNeededToIsland = Math.abs(drone.getGPS().getYCord() - (island.getY() / 2));
         logger.info("Moves needed to middle: " + movesNeededToMiddle);
         logger.info("Moves needed to island: " + movesNeededToIsland);
     }

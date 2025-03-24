@@ -28,11 +28,6 @@ public class GPS {
         return Direction.values()[leftOrdinal];
     }
 
-    public Direction getOppositeDirection() {
-        int oppositeOrdinal = (direction.ordinal() + 2) % 4;
-        return Direction.values()[oppositeOrdinal]; 
-    }
-
     public void setDirection(Direction direction) {
         this.direction = direction;
     }

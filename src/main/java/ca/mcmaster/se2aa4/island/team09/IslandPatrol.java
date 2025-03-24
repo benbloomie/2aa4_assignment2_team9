@@ -17,7 +17,6 @@ public class IslandPatrol extends SearchPhase {
         // Check if both emergency site and creek are found
 
         drone.scan(commandCenter);
-        int directionIndex = stepCounter % 4;
         if (moveCounter == 0) {
             drone.turnDrone(drone.getGPS().getLeftDirection(), commandCenter);
             
@@ -34,7 +33,7 @@ public class IslandPatrol extends SearchPhase {
                 segmentLength++;
             }
         }
-        if (segmentLength >= island.getX() - 7){
+        if (segmentLength >= island.getX() - 1){
             phaseCompleted = true;
         }
         

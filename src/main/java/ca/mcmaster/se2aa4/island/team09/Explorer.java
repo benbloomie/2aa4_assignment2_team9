@@ -111,6 +111,9 @@ public class Explorer implements IExplorerRaid {
     // Tentative
     @Override
     public String deliverFinalReport() {
+        logger.info("Delivering final report");
+        logger.info("Emergency Site ID: " + resultManager.getEmergencySite());
+        logger.info("Creek IDs Found: " + resultManager.getCreekIds());
         return "Emergency Site ID: " + resultManager.getEmergencySite() + "\nCreek IDs Found: "
                 + resultManager.getCreekIds();
     }
