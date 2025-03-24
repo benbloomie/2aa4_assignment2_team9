@@ -1,4 +1,6 @@
 package ca.mcmaster.se2aa4.island.team09;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class IslandPatrol extends SearchPhase {
     private int stepCounter;
@@ -7,6 +9,8 @@ public class IslandPatrol extends SearchPhase {
     private boolean shouldScan = false;
     private Direction[] directions = { Direction.E, Direction.N, Direction.W, Direction.S };
     private ResponseCenter responseCenter;
+    private int i = 0;
+    private final Logger logger = LogManager.getLogger();
 
     public IslandPatrol(Drone drone, CommandCenter commandCenter, Island island) {
         super(drone, commandCenter, island);
@@ -15,36 +19,26 @@ public class IslandPatrol extends SearchPhase {
 
     @Override
     public void executeStep() { // assume we are already in the center of the island
-        // Check if both emergency site and creek are found
-        String emergencySiteId = responseCenter.getEmergencySite();
-        String creekIds = responseCenter.getCreekIds();
-        if (emergencySiteId != null && !creekIds.equals("[]")) {
-            phaseCompleted = true;
+        drone.scan(commandCenter);
+        if (i % 3 ==0){
+            System.out.println("Scans");
+            drone.scan(commandCenter);
+            i++;
             return;
         }
-
-        if (!shouldScan) {
-            int directionIndex = stepCounter % 4;
-            if (moveCounter == 0) {
-                drone.turnDrone(directions[directionIndex], commandCenter);
-                moveCounter++;
-            } else {
-                drone.moveForward(commandCenter);
-                moveCounter++;
-            }
-
-            if (moveCounter > segmentLength) {
-                stepCounter++;
-                moveCounter = 0;
-                if (stepCounter % 2 == 0) {
-                    segmentLength++;
-                }
-            }
-            shouldScan = true;
-
-        } else {
-            drone.scan(commandCenter);
-            shouldScan = false;
+        else if (i % 3 ==1){
+            drone.turnDrone(Direction.S, commandCenter);
+            System.out.println("Turns");
+            i++;
+            return;
+        }
+        else if (i % 3 ==2){
+            logger.info("MOVES");
+            drone.moveForward(commandCenter);
+            System.out.println("Moves");
+            i++;
+            phaseCompleted = true;
+            return;
         }
     }
 }

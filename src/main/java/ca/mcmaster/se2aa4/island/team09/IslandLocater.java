@@ -9,6 +9,7 @@ public class IslandLocater extends SearchPhase {
     private int movesMadeToIsland;
     private int movesNeededToMiddle;
     private int movesNeededToIsland;
+    private int i = 0;
 
     public IslandLocater(Drone drone, CommandCenter commandCenter, Island island) {
         super(drone, commandCenter, island);
@@ -19,6 +20,9 @@ public class IslandLocater extends SearchPhase {
 
     @Override
     public void executeStep() {
+        drone.scan(commandCenter);
+
+
         if (!movesAreSet()) {
             setMovesNeeded();
         }
