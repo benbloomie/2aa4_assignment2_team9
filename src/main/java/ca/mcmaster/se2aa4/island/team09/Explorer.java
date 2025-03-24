@@ -69,38 +69,6 @@ public class Explorer implements IExplorerRaid {
         return decision.toString();
     }
 
-    /*
-     * FLIES UNTIL BATTERY DIES --> SOMETIMES GOES OUT OF BOUNDS????
-     * //should be able to use this for IslandPatrol phase
-     * 
-     * @Override
-     * public String takeDecision() {
-     * ActionType prevAction = resultManager.getPreviousAction();
-     * 
-     * if (commandCenter.isDroneInAction()) {
-     * JSONObject decision = commandCenter.getNextCommand();
-     * logger.info("Drone in action: {}", decision.toString());
-     * return decision.toString();
-     * }
-     * 
-     * else if (prevAction == ActionType.MOVEMENT) {
-     * drone.frontEcho(commandCenter);
-     * }
-     * 
-     * else {
-     * if (resultManager.uTurnRequired()) { // if a U-Turn is needed, perform it
-     * drone.turnDrone(gps.getOppositeDirection(), commandCenter);
-     * }
-     * else { // otherwise, continue straight
-     * drone.moveForward(commandCenter);
-     * }
-     * }
-     * JSONObject decision = commandCenter.getNextCommand();
-     * logger.info("Executing action: {}", decision.toString());
-     * return decision.toString();
-     * }
-     */
-
     @Override
     public void acknowledgeResults(String s) {
         JSONObject scannerResponse = new JSONObject(new JSONTokener(new StringReader(s)));
