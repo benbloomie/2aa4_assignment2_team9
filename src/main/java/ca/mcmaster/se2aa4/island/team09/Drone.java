@@ -54,4 +54,8 @@ public class Drone {
     public void scan(CommandCenter commands) {
         photoScanner.scanGround(commands);
     }
+
+    public void stop(CommandCenter commands) {
+        propellers.stopDrone(commands);
+    }
 }

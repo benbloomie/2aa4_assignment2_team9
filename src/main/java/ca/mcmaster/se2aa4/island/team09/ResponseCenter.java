@@ -12,7 +12,6 @@ public class ResponseCenter {
     private Island island;
     private PoIStorage locationStorage;
     private RadarStatus radarStatus;
-    private ActionType actionProcessed;
 
     public ResponseCenter(Drone drone, Island island, GPS gps) {
         this.drone = drone;
@@ -47,19 +46,15 @@ public class ResponseCenter {
         JSONObject extraInfo = response.getJSONObject("extras");
         if (!extraInfo.isEmpty()) { // if extra information is present, process it
             analyzeExtras(extraInfo);
-        } else {
-            actionProcessed = ActionType.MOVEMENT;
-        }
+        } 
     }
 
     private void analyzeExtras(JSONObject extraInfo) {
         logger.info("Additional information received: {}", extraInfo);
         if (extraInfo.has("range")) { // action was an ECHO
-            actionProcessed = ActionType.ECHO;
             radarStatus.updateStatus(extraInfo);
             handleRadarStatus();
         } else { // action was a SCAN
-            actionProcessed = ActionType.SCAN;
             handleScanResult(extraInfo);
         }
     }
@@ -91,19 +86,6 @@ public class ResponseCenter {
             String emergencySiteId = siteInfo.getString(0); 
             locationStorage.setEmergencySite(new EmergencySite(emergencySiteId, xPos, yPos));
         }
-    }
-
-    public ActionType getPreviousAction() {
-        return actionProcessed;
-    }
-
-    public boolean uTurnRequired() {
-        EchoStatus recentEcho = radarStatus.getEcho();
-        // if our next fly reads OUT_OF_RANGE (off map) indicate a U-Turn needs to be performed
-        if (recentEcho == EchoStatus.OUT_OF_RANGE) {
-            return true;
-        }
-        return false;
     }
 
     public RadarStatus getRadarStatus() {

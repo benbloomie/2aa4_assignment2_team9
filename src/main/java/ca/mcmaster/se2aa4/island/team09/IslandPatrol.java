@@ -4,12 +4,9 @@ public class IslandPatrol extends SearchPhase {
     private int stepCounter;
     private int moveCounter; // progress towards completion of a segment of the algorithm
     private int segmentLength = 1;
-    private boolean shouldScan = false;
-    private ResponseCenter responseCenter;
 
     public IslandPatrol(Drone drone, CommandCenter commandCenter, Island island) {
         super(drone, commandCenter, island);
-        this.responseCenter = new ResponseCenter(drone, island, drone.getGPS());
     }
 
     @Override
@@ -35,6 +32,8 @@ public class IslandPatrol extends SearchPhase {
         }
         if (segmentLength >= island.getX() - 1){
             phaseCompleted = true;
+            drone.stop(commandCenter);
+            
         }
         
     }
