@@ -33,9 +33,9 @@ public class Explorer implements IExplorerRaid {
 
         this.drone = new Drone(startingDirection, new Battery(batteryCapacity), new Coordinate(xStart, yStart));
         this.commandCenter = new CommandCenter();
-        Island island = new Island();
+        Map map = new Map();
 
-        this.resultManager = new ResponseCenter(drone, island, drone.getGPS());
+        this.resultManager = new ResponseCenter(drone, map, drone.getGPS());
 
         // ADDED INITIALIZATIONS
 
@@ -44,9 +44,9 @@ public class Explorer implements IExplorerRaid {
 
         // Initialize search phases
         this.searchPhases = new LinkedList<>();
-        searchPhases.add(new IslandGenerator(drone, commandCenter, island));
-        searchPhases.add(new IslandLocater(drone, commandCenter, island));
-        searchPhases.add(new IslandPatrol(drone, commandCenter, island));
+        searchPhases.add(new MapGenerator(drone, commandCenter, map));
+        searchPhases.add(new IslandLocater(drone, commandCenter, map));
+        searchPhases.add(new IslandPatrol(drone, commandCenter, map));
     }
 
     @Override

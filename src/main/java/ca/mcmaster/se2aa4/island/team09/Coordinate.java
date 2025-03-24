@@ -7,7 +7,7 @@ public class Coordinate {
     private final Logger logger = LogManager.getLogger();
     private int xCoordinate;
     private int yCoordinate;
-    private int[][] positionAdjustments = {{0,-1}, {1,0}, {0, 1}, {-1, 0}};  // array to store the corresponding adjustmnets
+    private int[][] positionAdjustments = {{0,-1}, {1,0}, {0, 1}, {-1, 0}};  // array to store the corresponding adjustments for each direction
 
     public Coordinate(int x, int y) {
         this.xCoordinate = x;

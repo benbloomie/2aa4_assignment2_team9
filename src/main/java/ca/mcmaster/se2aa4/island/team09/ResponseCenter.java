@@ -9,13 +9,13 @@ public class ResponseCenter {
     private final Logger logger = LogManager.getLogger();
     private final GPS gps;
     private Drone drone;
-    private Island island;
+    private Map map;
     private PoIStorage locationStorage;
     private RadarStatus radarStatus;
 
-    public ResponseCenter(Drone drone, Island island, GPS gps) {
+    public ResponseCenter(Drone drone, Map map, GPS gps) {
         this.drone = drone;
-        this.island = island;
+        this.map = map;
         this.radarStatus = new RadarStatus();
         this.locationStorage = new PoIStorage();
         this.gps = gps;
@@ -63,10 +63,10 @@ public class ResponseCenter {
         logger.info("Radar Status: [{},{}]", radarStatus.getRange(), radarStatus.getEcho());
 
         // initialize island information if it hasnt been set yet
-        if (island.getX() == -1) {
-            island.setX(radarStatus.getRange());
-        } else if (island.getY() == -1) {
-            island.setY(radarStatus.getRange());
+        if (map.getX() == -1) {
+            map.setX(radarStatus.getRange());
+        } else if (map.getY() == -1) {
+            map.setY(radarStatus.getRange());
         }
     }
 

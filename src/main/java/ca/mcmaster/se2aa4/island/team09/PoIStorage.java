@@ -47,12 +47,12 @@ public class PoIStorage {
         return emergencySite;
     }
 
-    public Creek findNearestCreek(double startingX, double startingY) {
-        double minDistance = Double.MAX_VALUE;
+    public Creek findNearestCreek(int siteX, int siteY) {
+        int minDistance = Integer.MAX_VALUE;
         Creek nearestCreek = null;
 
         for (Creek creek : creeks) {
-            double distanceToCreek = creek.getDistanceTo(startingX, startingY);
+            int distanceToCreek = creek.getDistanceTo(siteX, siteY);
             logger.info("Creek " + creek.getId() + " is " + distanceToCreek + " away from site");
 
             if (distanceToCreek < minDistance) {

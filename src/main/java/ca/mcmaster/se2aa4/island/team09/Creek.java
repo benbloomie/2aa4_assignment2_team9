@@ -15,7 +15,7 @@ public class Creek {
     }
     
      
-    public double getDistanceTo(double startingX, double startingY) {
+    public int getDistanceTo(int startingX, int startingY) {
         logger.info("Creek x: " + this.x);
         logger.info("Creek y: " + this.y);
         logger.info("Starting x: " + startingX);

@@ -10,8 +10,8 @@ public class IslandLocater extends SearchPhase {
     private int movesNeededToMiddle;
     private int movesNeededToIsland;
 
-    public IslandLocater(Drone drone, CommandCenter commandCenter, Island island) {
-        super(drone, commandCenter, island);
+    public IslandLocater(Drone drone, CommandCenter commandCenter, Map map) {
+        super(drone, commandCenter, map);
         // calculates moves needed to island based on starting position
         this.movesMadeToMiddle = 0;
         this.movesMadeToIsland = 0;
@@ -68,8 +68,8 @@ public class IslandLocater extends SearchPhase {
 
     private void setMovesNeeded() {
         // sets the amount of moves the drone needs to make to get to the islands middle position
-        this.movesNeededToMiddle = Math.abs(drone.getGPS().getXCord() - (island.getX() / 2));
-        this.movesNeededToIsland = Math.abs(drone.getGPS().getYCord() - (island.getY() / 2));
+        this.movesNeededToMiddle = Math.abs(drone.getGPS().getXCord() - (map.getX() / 2));
+        this.movesNeededToIsland = Math.abs(drone.getGPS().getYCord() - (map.getY() / 2));
         logger.info("Moves needed to middle: " + movesNeededToMiddle);
         logger.info("Moves needed to island: " + movesNeededToIsland);
     }

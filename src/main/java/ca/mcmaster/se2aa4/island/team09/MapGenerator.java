@@ -1,9 +1,9 @@
 package ca.mcmaster.se2aa4.island.team09;
 
-public class IslandGenerator extends SearchPhase {
+public class MapGenerator extends SearchPhase {
 
-    public IslandGenerator(Drone drone, CommandCenter commandCenter, Island island) {
-        super(drone, commandCenter, island);
+    public MapGenerator(Drone drone, CommandCenter commandCenter, Map map) {
+        super(drone, commandCenter, map);
     }
 
     @Override
@@ -25,10 +25,10 @@ public class IslandGenerator extends SearchPhase {
     }
 
     public boolean isXNotSet() {
-        return island.getX() == -1;
+        return map.getX() == -1;
     }
 
     public boolean isYNotSet() {
-        return island.getY() == -1;
+        return map.getY() == -1;
     } 
 }
