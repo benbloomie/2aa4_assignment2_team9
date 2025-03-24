@@ -3,8 +3,8 @@ package ca.mcmaster.se2aa4.island.team09;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreekStorage {
-
+public class PoIStorage {
+    private EmergencySite emergencySite;
     private List<Creek> creeks = new ArrayList<>();
 
     public void addCreek(Creek foundCreek) {
@@ -31,8 +31,12 @@ public class CreekStorage {
         return creekIds.toString();
     }
 
-    public boolean isEmpty() {
-        return creeks.isEmpty();
+    public void setEmergencySite(EmergencySite emergencySite) {
+        this.emergencySite =  emergencySite;
+    }
+
+    public String getEmergencySiteId() {
+        return emergencySite.getId();
     }
 
     /* 

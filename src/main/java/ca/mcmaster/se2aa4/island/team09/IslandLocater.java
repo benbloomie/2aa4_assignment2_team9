@@ -53,7 +53,7 @@ public class IslandLocater extends SearchPhase {
     private void faceIsland() {
         // updates the drone to face the island; scans to get distance to island
         drone.turnDrone(drone.getGPS().getRightDirection(), commandCenter);
-        drone.frontEcho(commandCenter);
+        drone.echo(drone.getGPS().getDirection(), commandCenter);
         movesMadeToMiddle++;
     }
 
