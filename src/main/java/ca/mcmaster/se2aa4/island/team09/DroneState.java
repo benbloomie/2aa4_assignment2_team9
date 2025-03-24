@@ -11,7 +11,7 @@ public class DroneState {
         this.gps = new GPS(Direction.valueOf(direction), coordinates);
         this.propellers = new Propellers();
         this.battery = battery;
-        this.radar = new Radar(gps);
+        this.radar = new Radar();
         this.photoScanner = new PhotoScanner();
     }
 
@@ -47,12 +47,8 @@ public class DroneState {
         propellers.stopDrone(commands);
     }
 
-    public void frontEcho(CommandCenter commands) {
-        radar.noseEcho(commands);
-    }
-
-    public void rightEcho(CommandCenter commands) {
-        radar.rightEcho(commands);
+    public void echo(Direction echoDirection, CommandCenter commands) {
+        radar.echo(echoDirection, commands);
     }
 
     public void scan(CommandCenter commands) {

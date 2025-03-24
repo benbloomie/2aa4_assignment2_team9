@@ -10,16 +10,15 @@ public class ResponseCenter {
     private final GPS gps;
     private DroneState drone;
     private Island island;
-    private CreekStorage creekStorage;
+    private PoIStorage locationStorage;
     private RadarStatus radarStatus;
-    private String emergencySiteId;
     private ActionType actionProcessed;
 
     public ResponseCenter(DroneState drone, Island island, GPS gps) {
         this.drone = drone;
         this.island = island;
         this.radarStatus = new RadarStatus();
-        this.creekStorage = new CreekStorage();
+        this.locationStorage = new PoIStorage();
         this.gps = gps;
     }
 
@@ -78,18 +77,19 @@ public class ResponseCenter {
 
     public void handleScanResult(JSONObject extras) {
         JSONArray creeksInfo = extras.getJSONArray("creeks");  // retrieves the associated id with the creek
+        int xPos = gps.getXCord();
+        int yPos = gps.getYCord();
 
         // processes each id recognized by the scan
         for (int i = 0; i < creeksInfo.length(); i++) {
             String creekId = creeksInfo.getString(0);
-            int xPos = gps.getXCord();
-            int yPos = gps.getYCord();
-            creekStorage.addCreek(new Creek(creekId, xPos, yPos));
+            locationStorage.addCreek(new Creek(creekId, xPos, yPos));
         }
 
         JSONArray siteInfo = extras.getJSONArray("sites");  // retrieves the associated id with the emergecny site
         if (siteInfo.length() > 0) {  // if true, scan found a site  --> update emergecny site id
-            emergencySiteId = siteInfo.getString(0); 
+            String emergencySiteId = siteInfo.getString(0); 
+            locationStorage.setEmergencySite(new EmergencySite(emergencySiteId, xPos, yPos));
         }
     }
 
@@ -111,10 +111,10 @@ public class ResponseCenter {
     }
 
     public String getCreekIds() {
-        return creekStorage.getCreekResults();
+        return locationStorage.getCreekResults();
     }
 
     public String getEmergencySite() {
-        return emergencySiteId;
+        return locationStorage.getEmergencySiteId();
     }
 }
