@@ -43,10 +43,11 @@ public class Explorer implements IExplorerRaid {
         logger.info("The drone is facing {}", drone.getDirection());
         logger.info("Battery level is {}", drone.getBatteryLevel());
 
-        // TESTING
+        // Initialize search phases
         this.searchPhases = new LinkedList<>();
         searchPhases.add(new IslandGenerator(drone, commandCenter, island));
         searchPhases.add(new IslandLocater(drone, commandCenter, island));
+        searchPhases.add(new IslandPatrol(drone, commandCenter, island));
     }
 
     @Override
@@ -110,6 +111,7 @@ public class Explorer implements IExplorerRaid {
     // Tentative
     @Override
     public String deliverFinalReport() {
-        return "Emergency Site ID: " + resultManager.getEmergencySite() + "\nCreek IDs Found: " + resultManager.getCreekIds();
+        return "Emergency Site ID: " + resultManager.getEmergencySite() + "\nCreek IDs Found: "
+                + resultManager.getCreekIds();
     }
 }
