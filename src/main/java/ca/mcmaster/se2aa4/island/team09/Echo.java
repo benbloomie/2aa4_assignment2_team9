@@ -1,11 +1,8 @@
 package ca.mcmaster.se2aa4.island.team09;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
 public class Echo implements Action{
-    private final Logger logger = LogManager.getLogger();
     private Direction echoDirection;
     private CommandCenter commands;
 
@@ -14,6 +11,7 @@ public class Echo implements Action{
         this.commands = commandCenter;
     }
 
+    @Override
     public void performAction() { // find the echo value and send it to the command center
         // creates a JSONObject to store the parameter information
         JSONObject parameters = new JSONObject();

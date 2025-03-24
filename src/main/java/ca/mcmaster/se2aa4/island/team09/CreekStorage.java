@@ -7,14 +7,28 @@ public class CreekStorage {
 
     private List<Creek> creeks = new ArrayList<>();
 
-    public void addCreek(Creek creek) {
-        if (!creeks.contains(creek)) {
-            creeks.add(creek);
+    public void addCreek(Creek foundCreek) {
+        for (Creek creek: creeks) {
+            if (!creek.getId().equals(foundCreek.getId())) {  // if a new creek is recognized, at it to the storage
+                creeks.add(foundCreek);
+            }
         }
     }
 
-    public List<Creek> getAllCreeks() {
-        return creeks;
+    public String getCreekResults() {
+        StringBuffer creekIds = new StringBuffer();
+        creekIds.append("[");  
+    
+        for (int i = 0; i < creeks.size(); i++) {
+            Creek creek = creeks.get(i);
+            creekIds.append(creek.getId());
+    
+            if (i < creeks.size() - 1) {  // add a comma between id's until we reach the last string
+                creekIds.append(", ");
+            }
+        }
+        creekIds.append("]");  
+        return creekIds.toString();
     }
 
     public boolean isEmpty() {
