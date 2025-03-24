@@ -12,7 +12,7 @@ public class IslandPatrol extends SearchPhase{
     @Override
     public void executeStep(){ //assume we are already in the center of the island
         //call the east north west south segments in that order with the lengths extending each time to create a square scan radiating from the center of the island
-        int directionIndex = stepCounter%4;
+        int directionIndex = stepCounter % 4;
         if (moveCounter == 0){
             drone.turnDrone(directions[directionIndex], commandCenter);
             moveCounter++;
