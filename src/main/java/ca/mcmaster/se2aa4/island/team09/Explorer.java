@@ -15,7 +15,7 @@ public class Explorer implements IExplorerRaid {
 
     private final Logger logger = LogManager.getLogger();
     private CommandCenter commandCenter;
-    private DroneState drone;
+    private Drone drone;
     private ResponseCenter resultManager;
     private Island island;
     private Queue<SearchPhase> searchPhases;
@@ -32,7 +32,7 @@ public class Explorer implements IExplorerRaid {
         String startingDirection = info.getString("heading").toUpperCase();
         Integer batteryCapacity = info.getInt("budget");
 
-        this.drone = new DroneState(startingDirection, new Battery(batteryCapacity), new Coordinate(xStart, yStart));
+        this.drone = new Drone(startingDirection, new Battery(batteryCapacity), new Coordinate(xStart, yStart));
         this.commandCenter = new CommandCenter();
         this.island = new Island();
 
@@ -45,8 +45,8 @@ public class Explorer implements IExplorerRaid {
 
         // TESTING
         this.searchPhases = new LinkedList<>();
-        searchPhases.add(new IslandGenerator(drone, commandCenter, resultManager, island));
-        searchPhases.add(new IslandLocater(drone, commandCenter, resultManager, island));
+        searchPhases.add(new IslandGenerator(drone, commandCenter, island));
+        searchPhases.add(new IslandLocater(drone, commandCenter, island));
     }
 
     @Override

@@ -2,8 +2,8 @@ package ca.mcmaster.se2aa4.island.team09;
 
 public class IslandGenerator extends SearchPhase {
 
-    public IslandGenerator(DroneState drone, CommandCenter commandCenter, ResponseCenter responseCenter, Island island) {
-        super(drone, commandCenter, responseCenter, island);
+    public IslandGenerator(Drone drone, CommandCenter commandCenter, Island island) {
+        super(drone, commandCenter, island);
     }
 
     @Override

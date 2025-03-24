@@ -7,8 +7,8 @@ public class IslandPatrol extends SearchPhase{
     private boolean shouldScan = false;
     private Direction[] directions = {Direction.E, Direction.N, Direction.W, Direction.S};
 
-    public IslandPatrol(DroneState drone, CommandCenter commandCenter, ResponseCenter responseCenter, Island island){
-        super(drone, commandCenter, responseCenter, island);
+    public IslandPatrol(Drone drone, CommandCenter commandCenter, Island island){
+        super(drone, commandCenter, island);
     }
     @Override
     public void executeStep(){ //assume we are already in the center of the island
