@@ -2,10 +2,13 @@ package ca.mcmaster.se2aa4.island.team09;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class PoIStorage {
     private EmergencySite emergencySite;
     private List<Creek> creeks = new ArrayList<>();
+    private final Logger logger = LogManager.getLogger();
 
     public void addCreek(Creek foundCreek) {
         boolean isDuplicate = false;
@@ -50,6 +53,8 @@ public class PoIStorage {
 
         for (Creek creek : creeks) {
             double distanceToCreek = creek.getDistanceTo(startingX, startingY);
+            logger.info("Creek " + creek.getId() + " is " + distanceToCreek + " away from site");
+
             if (distanceToCreek < minDistance) {
                 minDistance = distanceToCreek;
                 nearestCreek = creek;
