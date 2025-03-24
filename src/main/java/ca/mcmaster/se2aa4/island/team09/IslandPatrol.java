@@ -1,16 +1,11 @@
 package ca.mcmaster.se2aa4.island.team09;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class IslandPatrol extends SearchPhase {
     private int stepCounter;
     private int moveCounter; // progress towards completion of a segment of the algorithm
     private int segmentLength = 1;
     private boolean shouldScan = false;
-    private Direction[] directions = { Direction.E, Direction.N, Direction.W, Direction.S };
     private ResponseCenter responseCenter;
-    private int i = 0;
-    private final Logger logger = LogManager.getLogger();
 
     public IslandPatrol(Drone drone, CommandCenter commandCenter, Island island) {
         super(drone, commandCenter, island);
@@ -19,26 +14,29 @@ public class IslandPatrol extends SearchPhase {
 
     @Override
     public void executeStep() { // assume we are already in the center of the island
+        // Check if both emergency site and creek are found
+
         drone.scan(commandCenter);
-        if (i % 3 ==0){
-            System.out.println("Scans");
-            drone.scan(commandCenter);
-            i++;
-            return;
-        }
-        else if (i % 3 ==1){
-            drone.turnDrone(Direction.S, commandCenter);
-            System.out.println("Turns");
-            i++;
-            return;
-        }
-        else if (i % 3 ==2){
-            logger.info("MOVES");
+        int directionIndex = stepCounter % 4;
+        if (moveCounter == 0) {
+            drone.turnDrone(drone.getGPS().getLeftDirection(), commandCenter);
+            
+            moveCounter++;
+        } else {
             drone.moveForward(commandCenter);
-            System.out.println("Moves");
-            i++;
-            phaseCompleted = true;
-            return;
+            moveCounter++;
         }
+
+        if (moveCounter > segmentLength) {
+            stepCounter++;
+            moveCounter = 0;
+            if (stepCounter % 2 == 0) {
+                segmentLength++;
+            }
+        }
+        if (segmentLength >= island.getX() - 7){
+            phaseCompleted = true;
+        }
+        
     }
 }
