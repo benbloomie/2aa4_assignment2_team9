@@ -1,4 +1,6 @@
-package ca.mcmaster.se2aa4.island.team09;
+package ca.mcmaster.se2aa4.island.team09.DroneActions;
+
+import ca.mcmaster.se2aa4.island.team09.MissionControl.CommandCenter;
 
 public class PhotoScanner {
 

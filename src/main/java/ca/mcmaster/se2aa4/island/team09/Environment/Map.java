@@ -1,4 +1,4 @@
-package ca.mcmaster.se2aa4.island.team09;
+package ca.mcmaster.se2aa4.island.team09.Environment;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,12 +23,12 @@ public class Map {
     }
 
     public void setX(int x) {
-        logger.info("Set island x-value to: {}", x);
+        logger.trace("Set island x-value to: {}", x);
         this.x = x;
     }
 
     public void setY(int y) {
-        logger.info("Set island y-value to: {}", y);
+        logger.trace("Set island y-value to: {}", y);
         this.y = y;
     }
 }

@@ -2,6 +2,8 @@ package ca.mcmaster.se2aa4.island.team09;
 
 import java.io.File;
 
+import ca.mcmaster.se2aa4.island.team09.MissionControl.Explorer;
+
 import static eu.ace_design.island.runner.Runner.run;
 
 public class Runner {

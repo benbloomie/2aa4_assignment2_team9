@@ -1,4 +1,4 @@
-package ca.mcmaster.se2aa4.island.team09;
+package ca.mcmaster.se2aa4.island.team09.Environment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +53,7 @@ public class PoIStorage {
 
         for (Creek creek : creeks) {
             int distanceToCreek = creek.getDistanceTo(siteX, siteY);
-            logger.info("Creek " + creek.getId() + " is " + distanceToCreek + " away from site");
+            logger.trace("Creek " + creek.getId() + " is " + distanceToCreek + " away from site");
 
             if (distanceToCreek < minDistance) {
                 minDistance = distanceToCreek;

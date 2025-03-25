@@ -1,4 +1,8 @@
-package ca.mcmaster.se2aa4.island.team09;
+package ca.mcmaster.se2aa4.island.team09.Environment;
+
+import ca.mcmaster.se2aa4.island.team09.Drone.Drone;
+import ca.mcmaster.se2aa4.island.team09.MissionControl.CommandCenter;
+import ca.mcmaster.se2aa4.island.team09.MissionControl.SearchPhase;
 
 public class MapGenerator extends SearchPhase {
 

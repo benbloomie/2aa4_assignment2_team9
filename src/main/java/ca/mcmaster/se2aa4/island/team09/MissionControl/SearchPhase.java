@@ -1,4 +1,7 @@
-package ca.mcmaster.se2aa4.island.team09;
+package ca.mcmaster.se2aa4.island.team09.MissionControl;
+
+import ca.mcmaster.se2aa4.island.team09.Drone.Drone;
+import ca.mcmaster.se2aa4.island.team09.Environment.Map;
 
 public abstract class SearchPhase {
     protected Drone drone;

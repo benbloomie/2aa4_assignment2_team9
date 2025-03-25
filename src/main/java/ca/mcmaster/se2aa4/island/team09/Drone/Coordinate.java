@@ -1,4 +1,4 @@
-package ca.mcmaster.se2aa4.island.team09;
+package ca.mcmaster.se2aa4.island.team09.Drone;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,6 +30,6 @@ public class Coordinate {
         // increments the position using the adjustment factor from the array
         int yAdjust = positionAdjustments[directionValue][1];
         this.yCoordinate = yCoordinate + yAdjust;
-        logger.info("Updated coordinates: [{}, {}]", xCoordinate, yCoordinate);
+        logger.trace("Updated coordinates: [{}, {}]", xCoordinate, yCoordinate);
     }
 }

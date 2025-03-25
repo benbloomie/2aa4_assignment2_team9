@@ -1,4 +1,10 @@
-package ca.mcmaster.se2aa4.island.team09;
+package ca.mcmaster.se2aa4.island.team09.Drone;
+
+import ca.mcmaster.se2aa4.island.team09.DroneActions.Action;
+import ca.mcmaster.se2aa4.island.team09.DroneActions.Fly;
+import ca.mcmaster.se2aa4.island.team09.DroneActions.Stop;
+import ca.mcmaster.se2aa4.island.team09.DroneActions.Turn;
+import ca.mcmaster.se2aa4.island.team09.MissionControl.CommandCenter;
 
 // propellers class controls which action is called
 public class Propellers {

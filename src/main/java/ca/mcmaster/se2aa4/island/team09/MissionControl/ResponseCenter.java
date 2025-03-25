@@ -1,8 +1,16 @@
-package ca.mcmaster.se2aa4.island.team09;
+package ca.mcmaster.se2aa4.island.team09.MissionControl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
+
+import ca.mcmaster.se2aa4.island.team09.Drone.Drone;
+import ca.mcmaster.se2aa4.island.team09.Drone.GPS;
+import ca.mcmaster.se2aa4.island.team09.Environment.Creek;
+import ca.mcmaster.se2aa4.island.team09.Environment.EmergencySite;
+import ca.mcmaster.se2aa4.island.team09.Environment.Map;
+import ca.mcmaster.se2aa4.island.team09.Environment.PoIStorage;
+
 import org.json.JSONArray;
 
 public class ResponseCenter {
@@ -22,7 +30,7 @@ public class ResponseCenter {
     }
 
     public void acknowledge(JSONObject response) {
-        logger.info("** Response received:\n" + response.toString(2));
+        logger.trace("** Response received:\n" + response.toString(2));
         processCost(response);
         processStatus(response);
         processExtras(response);
@@ -31,14 +39,14 @@ public class ResponseCenter {
     private void processCost(JSONObject response) {
         // processes cost information --> updates the drones battery correspondingly
         Integer cost = response.getInt("cost");
-        logger.info("The cost of the action was {}", cost);
+        logger.trace("The cost of the action was {}", cost);
         drone.consumeBattery(cost);
     }
 
     private void processStatus(JSONObject response) {
         // analyzes the status of the drone
         String status = response.getString("status");
-        logger.info("The status of the drone is {}", status);
+        logger.trace("The status of the drone is {}", status);
     }
 
     private void processExtras(JSONObject response) {
@@ -50,7 +58,7 @@ public class ResponseCenter {
     }
 
     private void analyzeExtras(JSONObject extraInfo) {
-        logger.info("Additional information received: {}", extraInfo);
+        logger.trace("Additional information received: {}", extraInfo);
         if (extraInfo.has("range")) { // action was an ECHO
             radarStatus.updateStatus(extraInfo);
             handleRadarStatus();
@@ -60,7 +68,7 @@ public class ResponseCenter {
     }
 
     private void handleRadarStatus() {
-        logger.info("Radar Status: [{},{}]", radarStatus.getRange(), radarStatus.getEcho());
+        logger.trace("Radar Status: [{},{}]", radarStatus.getRange(), radarStatus.getEcho());
 
         // initialize island information if it hasnt been set yet
         if (map.getX() == -1) {

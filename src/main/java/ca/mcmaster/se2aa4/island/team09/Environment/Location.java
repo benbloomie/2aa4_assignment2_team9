@@ -1,4 +1,4 @@
-package ca.mcmaster.se2aa4.island.team09;
+package ca.mcmaster.se2aa4.island.team09.Environment;
 
 public abstract class Location {
     protected String id;

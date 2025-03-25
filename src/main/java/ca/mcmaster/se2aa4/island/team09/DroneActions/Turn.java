@@ -1,6 +1,10 @@
-package ca.mcmaster.se2aa4.island.team09;
+package ca.mcmaster.se2aa4.island.team09.DroneActions;
 
 import org.json.JSONObject;
+
+import ca.mcmaster.se2aa4.island.team09.Drone.Direction;
+import ca.mcmaster.se2aa4.island.team09.Drone.GPS;
+import ca.mcmaster.se2aa4.island.team09.MissionControl.CommandCenter;
 
 public class Turn implements Action {
     private final CommandCenter commands;

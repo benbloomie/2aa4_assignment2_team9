@@ -1,7 +1,11 @@
-package ca.mcmaster.se2aa4.island.team09;
+package ca.mcmaster.se2aa4.island.team09.MissionControl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import ca.mcmaster.se2aa4.island.team09.Drone.Direction;
+import ca.mcmaster.se2aa4.island.team09.Drone.Drone;
+import ca.mcmaster.se2aa4.island.team09.Environment.Map;
 
 public class IslandLocater extends SearchPhase {
     private final Logger logger = LogManager.getLogger();
@@ -70,7 +74,7 @@ public class IslandLocater extends SearchPhase {
         // sets the amount of moves the drone needs to make to get to the islands middle position
         this.movesNeededToMiddle = Math.abs(drone.getGPS().getXCord() - (map.getX() / 2));
         this.movesNeededToIsland = Math.abs(drone.getGPS().getYCord() - (map.getY() / 2));
-        logger.info("Moves needed to middle: " + movesNeededToMiddle);
-        logger.info("Moves needed to island: " + movesNeededToIsland);
+        logger.trace("Moves needed to middle: " + movesNeededToMiddle);
+        logger.trace("Moves needed to island: " + movesNeededToIsland);
     }
 }
