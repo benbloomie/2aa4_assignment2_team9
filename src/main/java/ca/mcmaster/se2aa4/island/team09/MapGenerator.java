@@ -24,11 +24,11 @@ public class MapGenerator extends SearchPhase {
         }
     }
 
-    public boolean isXNotSet() {
+    private boolean isXNotSet() {
         return map.getX() == -1;
     }
 
-    public boolean isYNotSet() {
+    private boolean isYNotSet() {
         return map.getY() == -1;
     } 
 }

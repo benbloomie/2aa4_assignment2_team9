@@ -10,36 +10,44 @@ public class IslandPatrol extends SearchPhase {
     }
 
     @Override
-    public void executeStep() { // assume we are already in the center of the island
-        // Check if both emergency site and creek are found
-
+    public void executeStep() { // assumes we are already in the center of the island
         drone.scan(commandCenter);
 
         if (moveCounter == 0) {
-            drone.turnDrone(drone.getGPS().getLeftDirection(), commandCenter); //turn drone left
-            
-            moveCounter++;
-        } else {
-            drone.moveForward(commandCenter);
-            moveCounter++;
+            startSegment();
+        }
+        else {
+            continueSegment();
         }
 
-        if (moveCounter > segmentLength) { //segment has been completed by drone so move to create next segment
-            stepCounter++;
-            moveCounter = 0;
-            if (stepCounter % 2 == 0) { //extend length of segment by 1 every other segment that is traversed
-                segmentLength++;
-            }
+        if (moveCounter > segmentLength) {
+            completeSegment();
         }
-
-        if (segmentLength >= map.getX() - 1){ //if drone is going to spiral out of map end the phase and stop the drone
+        finishPhaseCheck();
+    }
+    
+    private void startSegment() {
+        drone.turnDrone(drone.getGPS().getLeftDirection(), commandCenter);
+        moveCounter++;
+    }
+    
+    private void continueSegment() {
+        drone.moveForward(commandCenter);
+        moveCounter++;
+    }
+    
+    private void completeSegment() { //segment has been completed by drone so move to create next segment
+        stepCounter++;
+        moveCounter = 0;
+        if (stepCounter % 2 == 0) { //extend length of segment by 1 every other segment that is traversed
+            segmentLength++;
+        }
+    }
+    
+    private void finishPhaseCheck() { // if drone is going to spiral out of map or battery is nearly depleted end the phase and stop the drone
+        if ((segmentLength >= map.getX() - 1) || (drone.getBatteryLevel() < 100)) { 
             phaseCompleted = true;
             drone.stop(commandCenter);
-            
         }
-        else if (drone.getBatteryLevel() < 100){ //stop the drone if battery runs too low
-            drone.stop(commandCenter);
-        }
-        
     }
 }
